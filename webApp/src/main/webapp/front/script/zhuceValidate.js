@@ -16,9 +16,5 @@ function passwordV() {
         document.getElementById("passwordSpan").innerText = "";
 }
 
-$(document).ready(
-    $(":input[id='username']").click(function () {
-        alert("ok")
-    })
-)
+
 
