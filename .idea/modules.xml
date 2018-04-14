@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/shopping.iml" filepath="$PROJECT_DIR$/shopping.iml" />
+      <module fileurl="file://$PROJECT_DIR$/webApp/webApp.iml" filepath="$PROJECT_DIR$/webApp/webApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/webCommon/webCommon.iml" filepath="$PROJECT_DIR$/webCommon/webCommon.iml" />
+      <module fileurl="file://$PROJECT_DIR$/webDao/webDao.iml" filepath="$PROJECT_DIR$/webDao/webDao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/webEntity/webEntity.iml" filepath="$PROJECT_DIR$/webEntity/webEntity.iml" />
+      <module fileurl="file://$PROJECT_DIR$/webService/webService.iml" filepath="$PROJECT_DIR$/webService/webService.iml" />
+    </modules>
+  </component>
+</project>

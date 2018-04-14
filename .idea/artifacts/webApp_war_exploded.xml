@@ -1,0 +1,31 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="webApp:war exploded">
+    <output-path>$PROJECT_DIR$/webApp/target/webApp</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="webApp" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="archive" name="webService-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="webService" />
+          </element>
+          <element id="archive" name="webEntity-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="webEntity" />
+          </element>
+          <element id="archive" name="webDao-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="webDao" />
+          </element>
+          <element id="archive" name="webCommon-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="webCommon" />
+          </element>
+          <element id="library" level="project" name="Maven: mysql:mysql-connector-java:6.0.2" />
+        </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/webApp/target/webApp/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="javaee-facet-resources" facet="webApp/web/Web" />
+    </root>
+  </artifact>
+</component>

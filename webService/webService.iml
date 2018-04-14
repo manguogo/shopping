@@ -13,7 +13,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="webEntity" />
-    <orderEntry type="library" name="Maven: com.zgbs:webDao:1.0-SNAPSHOT" level="project" />
+    <orderEntry type="module" module-name="webDao" />
     <orderEntry type="module" module-name="webCommon" />
     <orderEntry type="library" name="Maven: mysql:mysql-connector-java:6.0.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.12" level="project" />
