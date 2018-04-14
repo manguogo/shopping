@@ -29,7 +29,7 @@ function password2V() {
 
 function phoneV() {
     var ph = $("#phone").val();
-    if(ph == "")
+    if(ph == "" || ph.length != 11)
         document.getElementById("phoneSpan").innerText = "请输入电话号码";
 
     else
