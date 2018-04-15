@@ -18,11 +18,16 @@
         user.setPassword(password);
         user.setPhone(phone);
         user.setAddr(addr);
-        us.add(user);
+        //us.add(user);
 
     %>
 </head>
 <body>
     注册成功!
+    <%=username %>
+    <%=password %>
+    <%=phone %>
+    <%=addr%>
+
 </body>
 </html>
