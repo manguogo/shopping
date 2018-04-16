@@ -3,6 +3,7 @@ package dao.implTest;
 import dao.UserDao;
 import dao.impl.UserDaoImpl;
 import entity.User;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Iterator;
@@ -36,6 +37,13 @@ public class UserDaoImplTest {
             User user = userIter.next();
             System.out.println(user.getUserName());
         }
+    }
+
+    @Test
+    public void selectUserTest(){
+        UserDao ud = new UserDaoImpl();
+        User user = ud.selectUser(1);
+        Assert.assertEquals("tom", user.getUserName());
     }
 
 }

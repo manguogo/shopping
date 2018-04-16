@@ -12,7 +12,6 @@
         Set<User> users = us.allUsers();
         User user = null;
 
-
         Iterator<User> userIterator = users.iterator();
     %>
 <title></title>
@@ -36,7 +35,7 @@
 <!-- MainForm -->
 <div id="MainForm">
 <div class="form_boxA">
-<h2>年度预算列表</h2>
+<h2>.....</h2>
 <table cellpadding="0" cellspacing="0">
 <tr>
 
@@ -58,11 +57,11 @@
         <td><%=user.getPhone()%></td>
         <td><%=user.getAddr()%></td>
         <td><%=user.getDateTime()%></td>
-        <td><a href="#">修改</a> | <a href="#">删除</a></td>
+        <td><a href="userUpdate.jsp?id=<%=user.getId() %>">修改</a> | <a href="#">删除</a></td>
     </tr>
      <%
         }
-    %>
+     %>
 
 
 </table>

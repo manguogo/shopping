@@ -8,14 +8,16 @@ import service.UserService;
 import java.util.Set;
 
 public class UserServiceImpl implements UserService {
-
+    UserDao ud = new UserDaoImpl();
     public void add(User user) {
-        UserDao ud = new UserDaoImpl();
         ud.save(user);
     }
 
     public Set<User> allUsers() {
-        UserDao ud = new UserDaoImpl();
         return ud.selectAllUsers();
+    }
+
+    public User getUser(int id) {
+        return ud.selectUser(id);
     }
 }

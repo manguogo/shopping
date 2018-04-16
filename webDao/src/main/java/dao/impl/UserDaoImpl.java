@@ -64,4 +64,32 @@ public class UserDaoImpl implements UserDao{
 
         return users;
     }
+
+    public User selectUser(int id) {
+        User user = null;
+        Connection conn = null;
+        ResultSet rs = null;
+        PreparedStatement pst = null;
+        conn = DBConnectors.getConnetion();
+        String sql = "select * from user where id = ?";
+        try {
+            pst = conn.prepareStatement(sql);
+            pst.setInt(1, id);
+            rs = pst.executeQuery();
+            rs.next();
+            user = new User(rs.getInt("id"),
+                            rs.getString("username"),
+                            rs.getString("phone"),
+                            rs.getString("addr"),
+                            rs.getTimestamp("rdate"));
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            DBConnectors.close(conn, pst, rs);
+        }
+
+        return user;
+
+    }
 }
