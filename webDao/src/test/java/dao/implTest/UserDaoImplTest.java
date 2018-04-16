@@ -3,7 +3,10 @@ package dao.implTest;
 import dao.UserDao;
 import dao.impl.UserDaoImpl;
 import entity.User;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+
+import java.util.Iterator;
+import java.util.Set;
 
 
 public class UserDaoImplTest {
@@ -21,6 +24,18 @@ public class UserDaoImplTest {
         ud.save(user);
 
 
+    }
+
+    @Test
+    public void selectAllUsersTest(){
+        UserDao ud = new UserDaoImpl();
+        Set<User> users = ud.selectAllUsers();
+
+        Iterator<User> userIter = users.iterator();
+        while (userIter.hasNext()){
+            User user = userIter.next();
+            System.out.println(user.getUserName());
+        }
     }
 
 }

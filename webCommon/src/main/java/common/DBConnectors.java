@@ -1,8 +1,6 @@
 package common;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class DBConnectors {
 
@@ -26,5 +24,35 @@ public class DBConnectors {
         return conn;
 
     }
+
+    public static void close(Connection conn, PreparedStatement ps, ResultSet rs){
+        close(ps, rs);
+        try {
+
+            if (conn != null) {
+                conn.close();
+                conn = null;
+            }
+        }catch (SQLException e) {
+             e.printStackTrace();
+         }
+
+    }
+    public static void close(PreparedStatement ps, ResultSet rs){
+        try {
+            if (rs != null){
+                rs.close();
+                rs = null;
+            }
+            if (ps != null){
+                ps.close();
+                ps = null;
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
 }

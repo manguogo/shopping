@@ -4,14 +4,16 @@ import dao.UserDao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashSet;
+import java.util.Set;
 
 import common.*;
 import entity.User;
 
 public class UserDaoImpl implements UserDao{
 
-    @Override
     public void save(User user) {
         String sql = "insert into user VALUES (null, ?, ?, ?, ?, now())";
         Connection conn = null;
@@ -31,5 +33,35 @@ public class UserDaoImpl implements UserDao{
         }
 
 
+    }
+
+    public Set<User> selectAllUsers() {
+        String sql = "select * from user";
+        Connection conn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Set<User> users = new HashSet<User>();
+
+        conn = DBConnectors.getConnetion();
+        try {
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            while (rs.next()){
+//                System.out.println(rs.getString("username"));
+                users.add(new User(
+                        rs.getInt("id"),
+                        rs.getString("username"),
+                        rs.getString("phone"),
+                        rs.getString("addr"),
+                        rs.getTimestamp("rdate")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            DBConnectors.close(conn, pst, rs);
+        }
+
+        return users;
     }
 }

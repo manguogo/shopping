@@ -10,6 +10,26 @@ public class User {
     private String addr;
     private Timestamp dateTime;
 
+    public User() {
+    }
+
+    public User(int id, String userName, String phone, String addr, Timestamp dateTime) {
+        this.id = id;
+        this.userName = userName;
+        this.phone = phone;
+        this.addr = addr;
+        this.dateTime = dateTime;
+    }
+
+    public User(int id, String userName, String password, String phone, String addr, Timestamp dateTime) {
+        this.id = id;
+        this.userName = userName;
+        this.password = password;
+        this.phone = phone;
+        this.addr = addr;
+        this.dateTime = dateTime;
+    }
+
     public int getId() {
         return id;
     }
