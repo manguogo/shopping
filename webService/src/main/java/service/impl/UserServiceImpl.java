@@ -5,6 +5,7 @@ import dao.impl.UserDaoImpl;
 import entity.User;
 import service.UserService;
 
+import java.sql.Timestamp;
 import java.util.Set;
 
 public class UserServiceImpl implements UserService {
@@ -19,5 +20,9 @@ public class UserServiceImpl implements UserService {
 
     public User getUser(int id) {
         return ud.selectUser(id);
+    }
+
+    public void changeUser(User user) {
+        ud.updateUser(user);
     }
 }

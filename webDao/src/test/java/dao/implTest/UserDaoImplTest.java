@@ -46,4 +46,14 @@ public class UserDaoImplTest {
         Assert.assertEquals("tom", user.getUserName());
     }
 
+    @Test
+    public  void updateUserTest(){
+        UserDao ud = new UserDaoImpl();
+        User user = new User();
+        user.setId(5);
+        user.setUserName("测试5");
+        user.setPhone("000000");
+        ud.updateUser(user);
+    }
+
 }

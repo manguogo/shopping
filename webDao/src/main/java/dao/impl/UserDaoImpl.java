@@ -2,10 +2,7 @@ package dao.impl;
 
 import dao.UserDao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,13 +27,15 @@ public class UserDaoImpl implements UserDao{
             pst.execute();
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+            DBConnectors.close(conn, pst, null);
         }
 
 
     }
 
     public Set<User> selectAllUsers() {
-        String sql = "select * from user";
+        String sql = "select * from user ORDER by id ASC ";
         Connection conn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -91,5 +90,35 @@ public class UserDaoImpl implements UserDao{
 
         return user;
 
+    }
+
+    public void updateUser(User user) {
+        String sql = "update user set username = " + "'" + user.getUserName() + "'";
+        String password = user.getPassword();
+        String phone = user.getPhone();
+        String addr = user.getAddr();
+        Connection conn = null;
+        PreparedStatement pst = null;
+
+        conn = DBConnectors.getConnetion();
+
+        if(password != "" && password != null)
+            sql += ",password = " +  "'" + password  + "'";
+        if(phone != "" && phone != null)
+            sql += ",phone = " + "'" + phone  + "'";
+        if(addr != "" && addr != null)
+            sql += ",addr = " + "'" + addr + "'";
+
+        sql += " where id = " + user.getId() + ";";
+        System.out.println(sql);
+
+        try {
+            pst = conn.prepareStatement(sql);
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            DBConnectors.close(conn, pst, null);
+        }
     }
 }
