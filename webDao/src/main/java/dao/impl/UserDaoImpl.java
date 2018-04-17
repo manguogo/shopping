@@ -110,7 +110,7 @@ public class UserDaoImpl implements UserDao{
             sql += ",addr = " + "'" + addr + "'";
 
         sql += " where id = " + user.getId() + ";";
-        System.out.println(sql);
+        //System.out.println(sql);
 
         try {
             pst = conn.prepareStatement(sql);
@@ -121,4 +121,43 @@ public class UserDaoImpl implements UserDao{
             DBConnectors.close(conn, pst, null);
         }
     }
+
+    public int deleteUser(Integer id) {
+        String sql = "delete from user where id = " + id + ";";
+        System.out.println(sql);
+        int i = 0;
+        Connection conn = null;
+        PreparedStatement pst = null;
+
+        conn = DBConnectors.getConnetion();
+        try {
+            pst = conn.prepareStatement(sql);
+            i = pst.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            DBConnectors.close(conn, pst, null);
+        }
+        return i;
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

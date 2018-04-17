@@ -56,4 +56,27 @@ public class UserDaoImplTest {
         ud.updateUser(user);
     }
 
+    @Test
+    public void deleteUserTest(){
+        UserDao ud = new UserDaoImpl();
+
+        Assert.assertEquals(1, ud.deleteUser(6));
+
+
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

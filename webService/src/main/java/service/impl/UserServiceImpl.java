@@ -25,4 +25,8 @@ public class UserServiceImpl implements UserService {
     public void changeUser(User user) {
         ud.updateUser(user);
     }
+
+    public void remove(Integer id) {
+        ud.deleteUser(id);
+    }
 }

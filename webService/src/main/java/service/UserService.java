@@ -10,4 +10,5 @@ public interface UserService {
     public Set<User> allUsers();
     public User getUser(int id);
     public void changeUser(User user);
+    public void remove(Integer id);
 }

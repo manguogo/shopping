@@ -9,10 +9,12 @@
 <head>
     <%
         UserService us = new UserServiceImpl();
-        Set<User> users = us.allUsers();
         User user = null;
+        Set<User> users = null;
+        Iterator<User> userIterator = null;
+        users = us.allUsers();
+        userIterator = users.iterator();
 
-        Iterator<User> userIterator = users.iterator();
     %>
 <title></title>
 
@@ -57,7 +59,10 @@
         <td><%=user.getPhone()%></td>
         <td><%=user.getAddr()%></td>
         <td><%=user.getDateTime()%></td>
-        <td><a href="userUpdate.jsp?id=<%=user.getId() %>">修改</a> | <a href="#">删除</a></td>
+        <td>
+            <a href="userUpdate.jsp?id=<%=user.getId() %>">修改</a>
+            |
+            <a href="userRemove.jsp?id=<%=user.getId() %>" name="userRemove">删除</a></td>
     </tr>
      <%
         }

@@ -11,4 +11,6 @@ public interface UserDao {
     public User selectUser(int id);
 
     public void updateUser(User user);
+
+    public int deleteUser(Integer id);
 }
