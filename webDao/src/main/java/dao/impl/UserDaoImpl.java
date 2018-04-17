@@ -124,7 +124,7 @@ public class UserDaoImpl implements UserDao{
 
     public int deleteUser(Integer id) {
         String sql = "delete from user where id = " + id + ";";
-        System.out.println(sql);
+//        System.out.println(sql);
         int i = 0;
         Connection conn = null;
         PreparedStatement pst = null;

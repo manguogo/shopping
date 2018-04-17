@@ -4,16 +4,14 @@
 <%@ page import="entity.User" %>
 <%@ page import="java.util.Set" %>
 <%@ page import="java.util.Iterator" %>
+<%@ page import="java.util.List" %>
 
 <html>
 <head>
     <%
         UserService us = new UserServiceImpl();
         User user = null;
-        Set<User> users = null;
-        Iterator<User> userIterator = null;
-        users = us.allUsers();
-        userIterator = users.iterator();
+        User[] users = us.allUsers();
 
     %>
 <title></title>
@@ -50,8 +48,8 @@
 </tr>
 
     <%
-        while (userIterator.hasNext()){
-            user = userIterator.next();
+        for(int i = 0; i < users.length; i++){
+            user = users[i];
      %>
     <tr>
         <td><%=user.getId()%></td>
