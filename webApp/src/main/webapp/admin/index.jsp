@@ -1,7 +1,10 @@
-﻿<!DOCTYPE html >
+﻿<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <html >
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<%@include file="common.jsp"%>
+
 <title>首页</title>
 </head>
 <frameset rows="100,*" cols="*" scrolling="No" framespacing="0"
