@@ -1,7 +1,8 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html >
 <html >
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<%@include file="common.jsp"%>
 <title>首页左侧导航</title>
 <link rel="stylesheet" type="text/css" href="css/public.css" />
 <script type="text/javascript" src="js/jquery.min.js"></script>
@@ -13,7 +14,7 @@
 	<div class="container">
 
 		<div class="leftsidebar_box">
-			<a href="main.html" target="main"><div class="line">
+			<a href="main.jsp" target="main"><div class="line">
 					<img src="img/coin01.png" />&nbsp;&nbsp;首页
 				</div></a>
 			<dl class="system_log">
