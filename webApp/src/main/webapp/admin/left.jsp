@@ -30,24 +30,31 @@
 						target="main">会员管理</a><img class="icon5" src="img/coin21.png" />
 				</dd>
 			</dl>
+
+			<%--产品类型管理--%>
 			<dl class="system_log">
 				<dt>
-					<img class="icon1" src="img/coin01.png" /><img class="icon2"
-						src="img/coin02.png" /> 公共管理<img class="icon3"
-						src="img/coin19.png" /><img class="icon4"
-						src="img/coin20.png" />
+					<img class="icon1" src="img/coin01.png" />
+					<img class="icon2" src="img/coin02.png" /> 产品类型管理
+					<img class="icon3" src="img/coin19.png" />
+					<img class="icon4" src="img/coin20.png" />
 				</dt>
 				<dd>
-					<img class="coin11" src="img/coin111.png" /><img class="coin22"
-						src="img/coin222.png" /><a class="cks" href="p3.html"
-						target="main">广告管理</a><img class="icon5" src="img/coin21.png" />
+					<img class="coin11" src="img/coin111.png" />
+					<img class="coin22" src="img/coin222.png" />
+					<a class="cks" href="categoryJSP/categoryList.jsp" target="main">产品类别</a>
+					<img class="icon5" src="img/coin21.png" />
 				</dd>
+				<!--
 				<dd>
 					<img class="coin11" src="img/coin111.png" /><img class="coin22"
 						src="img/coin222.png" /><a class="cks" href="p2.html"
 						target="main">反馈管理</a><img class="icon5" src="img/coin21.png" />
 				</dd>
+				-->
 			</dl>
+
+			<%--会员管理--%>
 			<dl class="system_log">
 				<dt>
 					<img class="icon1" src="img/coin07.png" /><img class="icon2"
