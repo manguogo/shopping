@@ -4,8 +4,9 @@ import entity.Category;
 
 import java.util.List;
 
-public interface CatetoryService {
+public interface CategoryService {
 
     public List<Category> getCategories();
 
+    public void addCategory(Category c);
 }

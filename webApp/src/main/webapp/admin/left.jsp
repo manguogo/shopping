@@ -45,13 +45,14 @@
 					<a class="cks" href="categoryJSP/categoryList.jsp" target="main">产品类别</a>
 					<img class="icon5" src="img/coin21.png" />
 				</dd>
-				<!--
+
 				<dd>
-					<img class="coin11" src="img/coin111.png" /><img class="coin22"
-						src="img/coin222.png" /><a class="cks" href="p2.html"
-						target="main">反馈管理</a><img class="icon5" src="img/coin21.png" />
+					<img class="coin11" src="img/coin111.png" />
+					<img class="coin22" src="img/coin222.png" />
+					<a class="cks" href="categoryJSP/categoryAdd.jsp" target="main">增加产品类别</a>
+					<img class="icon5" src="img/coin21.png" />
 				</dd>
-				-->
+
 			</dl>
 
 			<%--会员管理--%>

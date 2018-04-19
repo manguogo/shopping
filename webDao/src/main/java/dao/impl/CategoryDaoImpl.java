@@ -39,7 +39,51 @@ public class CategoryDaoImpl implements CategoryDao {
             DBConnectors.close(conn, pst, rs);
         }
 
-        return null;
+        return categories;
+    }
+
+    public Boolean insertCategory(Category c) {
+        String sql = "insert into category(id, pid, category.name, category.desc, grade, isleaf) values(null, ?, ?, ?, ?, ?)";
+        Connection conn = DBConnectors.getConnetion();
+        PreparedStatement pst = null;
+        Boolean isInsert = false;
+        try {
+            pst = conn.prepareStatement(sql);
+            if(c.getPid() != null){
+                pst.setInt(1, c.getPid());
+            }else{
+                pst.setInt(1, 0);
+            }
+            if(c.getName() != null){
+                pst.setString(2, c.getName());
+            }else{
+                return false;
+            }
+            if(c.getDesc() != null){
+                pst.setString(3, c.getDesc());
+            }else{
+                pst.setString(3, null);
+            }
+            if(c.getGrade() != null){
+                pst.setInt(4, c.getGrade());
+            }else{
+                pst.setInt(4, 1);
+            }
+            if(c.getIsleaf() != null){
+                pst.setInt(5, c.getIsleaf());
+            }else{
+                pst.setInt(5, 0);
+            }
+
+            System.out.println(sql);
+            isInsert = pst.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            DBConnectors.close(conn, pst, null);
+        }
+        return isInsert;
     }
 }
 

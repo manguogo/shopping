@@ -9,7 +9,7 @@
 <script type="text/javascript" src="js/public.js"></script>
 </head>
 
-<body>
+<body >
 	<!-- 头部 -->
 	<div class="head">
 		<div class="headL">

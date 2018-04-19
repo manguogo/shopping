@@ -1,12 +1,19 @@
-<%@ page import="service.CatetoryService" %>
-<%@ page import="service.impl.CategoryServiceImpl" %>
 <%@ page contentType="text/html;charset=utf-8" language="java" pageEncoding="UTF-8" %>
+<%@ page import="service.CategoryService" %>
+<%@ page import="service.impl.CategoryServiceImpl" %>
+<%@ page import="entity.Category" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Iterator" %>
 
 
 <html>
 <head>
     <%
-        CatetoryService cs = new CategoryServiceImpl();
+        List<Category> categoryList;
+        Category category;
+        CategoryService cs = new CategoryServiceImpl();
+        categoryList = cs.getCategories();
+        String isleaf = "不是";
     %>
     <title></title>
 
@@ -34,29 +41,35 @@
             <tr>
 
                 <th>ID</th>
-                <th>类别名</th>
                 <th>父类别</th>
+                <th>类别名</th>
                 <th>描述</th>
                 <th>类别级别</th>
+                <th>叶子节点</th>
             </tr>
 
             <%
-
+                for(Iterator<Category> categoryIterator = categoryList.iterator(); categoryIterator.hasNext();){
+                    category = categoryIterator.next();
+                    if(category.getIsleaf() == 1){
+                        isleaf = "是";
+                    }
 
             %>
             <tr>
-                <td><%=1%></td>
-                <td><%=1%></td>
-                <td><%=1%></td>
-                <td><%=1%></td>
-                <td><%=1%></td>
+                <td><%=category.getId()%></td>
+                <td><%=category.getPid()%></td>
+                <td><%=category.getName()%></td>
+                <td><%=category.getDesc()%></td>
+                <td><%=category.getGrade()%></td>
+                <td><%=isleaf%></td>
                 <td>
                     <a href="userUpdate.jsp?id=<%=1 %>">修改</a>
                     |
                     <a href="userRemove.jsp?id=<%=1 %>" name="userRemove">删除</a></td>
             </tr>
             <%
-
+                }
             %>
 
 

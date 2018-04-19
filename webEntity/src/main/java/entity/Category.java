@@ -7,7 +7,6 @@ public class Category {
     private String name;
     private String desc;
     private Integer grade;
-
     private Integer isleaf;
 
     public Category() {
