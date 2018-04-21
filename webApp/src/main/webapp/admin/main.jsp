@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <%@include file="common.jsp"%>
+    <%@include file="commonJSP/common.jsp"%>
 <title></title>
 <meta name="keywords" content="" />
 <meta name="description" content="" />

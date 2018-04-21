@@ -20,7 +20,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     public List<Category> getCategories() {
         CategoryDao cd = CategoryDaoImpl.getCategoryDao();
-        return cd.getAllCategories();
+        return cd.getAllCategories(true, null);
     }
 
     public void addCategory(Category c) {
@@ -41,4 +41,29 @@ public class CategoryServiceImpl implements CategoryService {
         }
 
     }
+
+    public Category findACategory(Category category) {
+        CategoryDao cd = CategoryDaoImpl.getCategoryDao();
+        List<Category> categories = cd.getAllCategories(false, category);
+        return categories.get(0);
+    }
+
+    public void updateCategory(Category category) {
+        CategoryDao cd = CategoryDaoImpl.getCategoryDao();
+        cd.updateCategory(category);
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

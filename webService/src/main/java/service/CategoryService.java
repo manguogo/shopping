@@ -11,4 +11,8 @@ public interface CategoryService {
     public void addCategory(Category c);
 
     public void removeCategory(Integer id, Integer pid);
+
+    public Category findACategory(Category category);
+
+    public void updateCategory(Category category);
 }

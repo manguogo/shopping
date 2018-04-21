@@ -2,7 +2,7 @@
 <!DOCTYPE html >
 <html >
 <head>
-	<%@include file="common.jsp"%>
+	<%@include file="commonJSP/common.jsp"%>
 <title>首页左侧导航</title>
 <link rel="stylesheet" type="text/css" href="css/public.css" />
 <script type="text/javascript" src="js/jquery.min.js"></script>

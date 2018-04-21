@@ -2,7 +2,7 @@
 <!DOCTYPE html >
 <html >
 <head>
-	<%@include file="common.jsp"%>
+	<%@include file="commonJSP/common.jsp"%>
 <title>头部</title>
 <link rel="stylesheet" type="text/css" href="css/public.css" />
 <script type="text/javascript" src="js/jquery.min.js"></script>

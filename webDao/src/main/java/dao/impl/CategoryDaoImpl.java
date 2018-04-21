@@ -24,9 +24,10 @@ public class CategoryDaoImpl implements CategoryDao {
         return  cd;
     }
 
-    public List<Category> getAllCategories() {
-
+    public List<Category> getAllCategories(Boolean isAllCategories, Category category) {
         String sql = "select * from category";
+        if(isAllCategories == false)
+            sql += " where id=" + category.getId();
         Connection conn = DBConnectors.getConnetion();
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -41,7 +42,6 @@ public class CategoryDaoImpl implements CategoryDao {
                                  rs.getString("name"), rs.getString("desc"),
                                  rs.getInt("grade"), rs.getInt("isleaf"));
                 categories.add(c);
-
             }
 
         } catch (SQLException e) {
@@ -82,6 +82,40 @@ public class CategoryDaoImpl implements CategoryDao {
         return categories;
 
     }
+
+    //更改传递过来的category,若返回值是-1则可以判断未传递category的id或是名称
+    public Integer updateCategory(Category category) {
+        String name = category.getName();
+        String desc = category.getDesc();
+        Integer id = category.getId();
+
+        if(null == id){
+            return -1;
+        }
+        if( null == name || name.trim().equals(""))
+            return -1;
+        if( null == desc || desc.trim().equals("")) {
+            desc = "";
+        }
+        String sql = "update category set category.name = '" + category.getName() +
+                "' , category.desc = '" + category.getDesc() + "' where id = " + category.getId();
+        System.out.println(sql);
+        int isUpdate = 0;
+        Connection conn = DBConnectors.getConnetion();
+        PreparedStatement pst = null;
+
+        try {
+            pst = conn.prepareStatement(sql);
+            isUpdate =  pst.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            DBConnectors.close(conn, pst, null);
+        }
+
+        return isUpdate;
+    }
+
     //通过子类别寻找父类别下是否还有子节点
     public boolean hasChildCategory(Category c){
         String sql = "select COUNT(*) as count from category where pid = " + c.getPid();
@@ -184,34 +218,40 @@ public class CategoryDaoImpl implements CategoryDao {
         deleteCategory(c);
     }
 
-    public void deleteCategory(Category c){
+    public Boolean deleteCategory(Category c){
 
-        String sql = "delete from category where 1=1";
+        String sql = "delete from category where 1=0";
+        Boolean isDelete = false;
 
         if(c.getId() != null ){
+
             sql += " and id = " + c.getId();
+            sql = sql.replace("1=0", "1=1");
 
         }
         if(c.getPid() != null ){
             sql += " and pid = " + c.getPid();
+            if(sql.contains("1=0"))
+                sql = sql.replace("1=0", "1=1");
+
         }
         if(c.getName() != null && c.getName().equals("")){
             sql += " and name like '%" + c.getName() + "%'";
-        }
-        if(c.getId() == null && c.getPid() == null && c.getName() ==null){
-            return;
+            if(sql.contains("1=0"))
+                sql = sql.replace("1=0", "1=1");
         }
         Connection conn = DBConnectors.getConnetion();
         PreparedStatement pst = null;
 
         try {
             pst = conn.prepareStatement(sql);
-            pst.execute();
+            isDelete = pst.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }finally {
             DBConnectors.close(conn, pst, null);
         }
+        return isDelete;
     }
 
 }

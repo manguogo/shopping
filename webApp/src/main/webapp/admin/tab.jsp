@@ -8,6 +8,7 @@
 
 <html>
 <head>
+    <%@include file="commonJSP/common.jsp"%>
     <%
         UserService us = new UserServiceImpl();
         User user = null;

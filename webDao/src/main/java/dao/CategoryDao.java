@@ -7,7 +7,7 @@ import java.util.List;
 public interface CategoryDao {
 
 
-    public List<Category> getAllCategories();
+    public List<Category> getAllCategories(Boolean isAllCategories, Category category);
 
     //通过子类别寻找父类别下是否还有子节点
     public boolean hasChildCategory(Category c);
@@ -21,4 +21,6 @@ public interface CategoryDao {
 
     //通过子类别寻找父类别的子类
     public List<Category> findChildCategory(Category c);
+
+    public Integer updateCategory(Category category);
 }

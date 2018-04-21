@@ -17,7 +17,7 @@ public class CategoryDaoImplTest {
         Category c;
         List<Category> categories;
         CategoryDao cd = CategoryDaoImpl.getCategoryDao();
-        categories = cd.getAllCategories();
+        categories = cd.getAllCategories(true, null);
 
         for(Iterator<Category> ci = categories.iterator(); ci.hasNext(); ){
             c = ci.next();
@@ -58,6 +58,18 @@ public class CategoryDaoImplTest {
         Category c = new Category();
         c.setPid(10);
         System.out.println(cd.hasChildCategory(c));
+
+    }
+
+    @Test
+    public void updateCategoryTest(){
+        CategoryDao cd = CategoryDaoImpl.getCategoryDao();
+        Category c = new Category();
+        c.setId(12);
+        c.setName("干红");
+        c.setDesc("test");
+        System.out.println(cd.updateCategory(c));
+
 
     }
 }

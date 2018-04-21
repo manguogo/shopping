@@ -8,6 +8,7 @@
 
 <html>
 <head>
+    <jsp:include page="../commonJSP/common.jsp"/>
     <%
         List<Category> categoryList;
         Category category;
@@ -66,7 +67,7 @@
                 <td><%=category.getGrade()%></td>
                 <td><%=isleaf%></td>
                 <td>
-                    <a href="userUpdate.jsp?id=<%=1 %>">修改</a>
+                    <a href="categoryUpdate.jsp?id=<%=category.getId() %>">修改</a>
                     |
                     <a href="categoryRemove.jsp?id=<%=category.getId() %>&pid=<%=category.getPid()%>" name="userRemove">删除</a>
                     |

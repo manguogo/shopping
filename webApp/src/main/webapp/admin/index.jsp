@@ -3,7 +3,7 @@
 <html >
 <head>
 
-	<%@include file="common.jsp"%>
+	<%@include file="commonJSP/common.jsp"%>
 
 <title>首页</title>
 </head>
