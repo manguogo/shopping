@@ -11,9 +11,9 @@
     <%
         List<Category> categoryList;
         Category category;
-        CategoryService cs = new CategoryServiceImpl();
+        CategoryService cs = CategoryServiceImpl.getCategoryService();
         categoryList = cs.getCategories();
-        String isleaf = "不是";
+        String isleaf = null;
     %>
     <title></title>
 
@@ -53,6 +53,8 @@
                     category = categoryIterator.next();
                     if(category.getIsleaf() == 1){
                         isleaf = "是";
+                    }else{
+                        isleaf = "不是";
                     }
 
             %>
@@ -66,7 +68,10 @@
                 <td>
                     <a href="userUpdate.jsp?id=<%=1 %>">修改</a>
                     |
-                    <a href="userRemove.jsp?id=<%=1 %>" name="userRemove">删除</a></td>
+                    <a href="categoryRemove.jsp?id=<%=category.getId() %>&pid=<%=category.getPid()%>" name="userRemove">删除</a>
+                    |
+                    <a href="categoryAdd.jsp?id=<%=category.getId()%>&grade=<%=category.getGrade()%>&isleaf=<%=category.getIsleaf()%>&from=categoryList">增加子类别</a>
+                </td>
             </tr>
             <%
                 }

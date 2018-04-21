@@ -12,6 +12,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryDaoImpl implements CategoryDao {
+    public static CategoryDao cd;
+
+    static {
+        cd = new CategoryDaoImpl();
+    }
+
+    private CategoryDaoImpl(){};
+
+    public static CategoryDao getCategoryDao(){
+        return  cd;
+    }
 
     public List<Category> getAllCategories() {
 
@@ -40,6 +51,66 @@ public class CategoryDaoImpl implements CategoryDao {
         }
 
         return categories;
+    }
+
+
+    //通过子类别寻找父类别的子类
+    public List<Category> findChildCategory(Category c){
+        String sql = "select * from category where pid = " + c.getPid();
+        Connection conn = DBConnectors.getConnetion();
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        List<Category> categories  = new ArrayList<Category>();
+
+        try {
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            while (rs.next()){
+                c = new Category(rs.getInt("id"), rs.getInt("pid"),
+                        rs.getString("name"), rs.getString("desc"),
+                        rs.getInt("grade"), rs.getInt("isleaf"));
+                categories.add(c);
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            DBConnectors.close(conn, pst, rs);
+        }
+
+        return categories;
+
+    }
+    //通过子类别寻找父类别下是否还有子节点
+    public boolean hasChildCategory(Category c){
+        String sql = "select COUNT(*) as count from category where pid = " + c.getPid();
+
+        Connection conn = DBConnectors.getConnetion();
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        List<Category> categories  = new ArrayList<Category>();
+        Boolean hasChildes = null;
+
+        try {
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            rs.next();
+            int count = rs.getInt("count");
+            if(count > 0){
+                hasChildes = true;
+            }else {
+                hasChildes = false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            DBConnectors.close(conn, pst, rs);
+        }
+
+        return hasChildes;
+
     }
 
     public Boolean insertCategory(Category c) {
@@ -72,10 +143,10 @@ public class CategoryDaoImpl implements CategoryDao {
             if(c.getIsleaf() != null){
                 pst.setInt(5, c.getIsleaf());
             }else{
-                pst.setInt(5, 0);
+                pst.setInt(5, 1);
             }
 
-            System.out.println(sql);
+            //System.out.println(sql);
             isInsert = pst.execute();
 
         } catch (SQLException e) {
@@ -85,6 +156,64 @@ public class CategoryDaoImpl implements CategoryDao {
         }
         return isInsert;
     }
+
+    //通过子类别改变父类别的isleaf属性,当isleaf为true时父类是叶子节点,当isleaf为false时父类节点不为叶子节点
+    public void updateCategoryLeaf(Category c, boolean isleaf) {
+        int isAleaf = 0;
+        if(isleaf == true){
+            isAleaf = 1;
+        }
+        String sql = "update category set isleaf = " + isAleaf + " where id = " + c.getPid();
+        Connection conn = DBConnectors.getConnetion();
+        PreparedStatement pst = null;
+        try {
+
+            pst = conn.prepareStatement(sql);
+            pst.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            DBConnectors.close(conn, pst, null);
+        }
+    }
+
+    public void deleteCategoryById(Integer id) {
+        Category c = new Category();
+        c.setId(id);
+        deleteCategory(c);
+    }
+
+    public void deleteCategory(Category c){
+
+        String sql = "delete from category where 1=1";
+
+        if(c.getId() != null ){
+            sql += " and id = " + c.getId();
+
+        }
+        if(c.getPid() != null ){
+            sql += " and pid = " + c.getPid();
+        }
+        if(c.getName() != null && c.getName().equals("")){
+            sql += " and name like '%" + c.getName() + "%'";
+        }
+        if(c.getId() == null && c.getPid() == null && c.getName() ==null){
+            return;
+        }
+        Connection conn = DBConnectors.getConnetion();
+        PreparedStatement pst = null;
+
+        try {
+            pst = conn.prepareStatement(sql);
+            pst.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            DBConnectors.close(conn, pst, null);
+        }
+    }
+
 }
 
 

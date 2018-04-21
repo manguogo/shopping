@@ -9,4 +9,6 @@ public interface CategoryService {
     public List<Category> getCategories();
 
     public void addCategory(Category c);
+
+    public void removeCategory(Integer id, Integer pid);
 }
