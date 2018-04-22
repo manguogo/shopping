@@ -7,7 +7,7 @@
 
     <link rel="stylesheet" type="text/css" href="../css/css.css" />
     <script type="text/javascript" src="../js/jquery.min.js"></script>
-    <jsp:include page="../commonJSP/common.jsp"/>
+    <%@include file="common.jsp"%>
     <%
         request.setCharacterEncoding("utf-8");
         CategoryService cs = CategoryServiceImpl.getCategoryService();

@@ -8,7 +8,7 @@
 
 <html>
 <head>
-    <jsp:include page="../commonJSP/common.jsp"/>
+    <%@include file="common.jsp"%>
     <%
         List<Category> categoryList;
         Category category;
@@ -77,7 +77,7 @@
             <%
                 }
             %>
-
+        <%=session.getAttribute("login") %>
 
         </table>
         <p class="msg"></p>

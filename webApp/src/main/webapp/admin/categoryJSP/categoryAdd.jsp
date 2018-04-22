@@ -6,7 +6,7 @@
 
 <html>
 <head>
-    <jsp:include page="../commonJSP/common.jsp"/>
+    <%@include file="common.jsp"%>
     <%
         request.setCharacterEncoding("UTF-8");
         CategoryService cs = CategoryServiceImpl.getCategoryService();
