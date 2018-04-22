@@ -12,7 +12,7 @@
     <%
         UserService us = new UserServiceImpl();
         User user = null;
-        User[] users = us.allUsers();
+        List<User> users = us.allUsers();
 
     %>
 <title></title>
@@ -49,8 +49,8 @@
 </tr>
 
     <%
-        for(int i = 0; i < users.length; i++){
-            user = users[i];
+        for(int i = 0; i < users.size(); i++){
+            user = users.get(i);
      %>
     <tr>
         <td><%=user.getId()%></td>

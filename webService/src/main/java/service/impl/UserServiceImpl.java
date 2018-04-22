@@ -18,28 +18,26 @@ public class UserServiceImpl implements UserService {
         ud.save(user);
     }
 
-    public User[] allUsers() {
+    public List<User> allUsers() {
         Set<User> userSet = ud.selectAllUsers();
-        Object[] objects =  userSet.toArray();
-        User[] users = new User[objects.length];
-        for(int i = 0; i < objects.length; i++){
-            users[i] = (User) objects[i];
+        List<User> users = new ArrayList<User>();
+        Iterator<User> userSetIterator = userSet.iterator();
+        User user = null;
+        for(int i = 0; i < userSet.size() && userSetIterator.hasNext(); i++){
+            user = userSetIterator.next();
+            users.add(user);
         }
-
-        for(int i = 0; i < users.length - 1; i++){
-            for(int j = users.length - 1; i < j; j--){
-                if(users[i].getId() > users[j].getId() ){
+        userSet = null;
+        for(int i = 0; i < users.size() - 1; i++){
+            for(int j = users.size() - 1; i < j; j--){
+                if(users.get(i).getId() > users.get(j).getId() ){
                     User userTmp = null;
-                    userTmp = users[i];
-                    users[i] =  users[j];
-                    users[j] = userTmp;
-//                   Util.swap(users[i], users[j]);
+                    userTmp = users.get(i);
+                    users.set(i, users.get(j));
+                    users.set(j, userTmp);
                 }
             }
-
         }
-
-
 
       /*  List<User> userList = new ArrayList<User>();
         Iterator<User> userIterator = userSet.iterator();

@@ -8,7 +8,7 @@ import java.util.Set;
 
 public interface UserService {
     public void add(User user);
-    public User[] allUsers();
+    public List<User> allUsers();
     public User getUser(int id);
     public void changeUser(User user);
     public void remove(Integer id);
