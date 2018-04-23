@@ -41,11 +41,18 @@ public class ProductDaoImplTest {
         pd.productInsert(p);
 
 
+    }
 
-
-
-
-
+    @Test
+    public void productDeleteById() {
+        ProductDao pd = ProductDaoImpl.getProductDao();
+        /*Product product = new Product();
+        Category c = new Category();
+        c.setId(12);
+        product.setCategory(c);
+        pd.productDelete(product);*/
+        //pd.productDeleteById(13);
+        //Assert.assertEquals(1, pd.productDeleteById(13));
     }
 
 }

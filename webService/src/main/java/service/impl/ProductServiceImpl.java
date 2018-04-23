@@ -27,4 +27,9 @@ public class ProductServiceImpl implements ProductService {
     public void productAdd(Product product) {
         pd.productInsert(product);
     }
+
+    public void removeProduct(Integer id) {
+
+        pd.productDeleteById(id);
+    }
 }

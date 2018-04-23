@@ -85,6 +85,59 @@ public class ProductDaoImpl implements ProductDao {
         }
 
     }
+
+    public void productDelete(Product product) {
+        //拼写删除product的sql语句
+        String sql = "delete from product where 1=0";
+        Integer id = product.getId();
+        String name = product.getName();
+        Timestamp time = product.getPdate();
+        Integer categoryId = null;
+        if (product.getCategory() != null) {
+            categoryId = product.getCategory().getId();
+        }else{
+
+        }
+        if (id != null) {
+            sql += " and id = " + id;
+            sql = sql.replace("1=0", "1=1");
+        }
+        if(null != name && name.equals("")){
+            sql += " and name = '" + name + "'";
+            sql = sql.replace("1=0", "1=1");
+        }
+        if(time != null){
+            sql += " and pdate = '" + time + "'";
+            sql = sql.replace("1=0", "1=1");
+        }
+        if (null != categoryId) {
+            sql += " and categoryid = " + categoryId;
+            sql = sql.replace("1=0", "1=1");
+        }
+        System.out.println(sql);
+
+        //删除product操作
+        Integer deleteCount = 0;
+        Connection conn = DBConnectors.getConnetion();
+        PreparedStatement pst = null;
+
+        try {
+            pst = conn.prepareStatement(sql);
+            deleteCount = pst.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            DBConnectors.close(conn, pst, null);
+        }
+    }
+
+    public void productDeleteById(Integer id) {
+        Product product = new Product();
+        product.setId(id);
+        productDelete(product);
+
+    }
+
 }
 
 
