@@ -27,6 +27,16 @@ public class Product {
         this.category = category;
     }
 
+    public Product(String name, String desc,
+                   Double normalPrice, Double memberPrice,
+                   Category category) {
+        this.name = name;
+        this.desc = desc;
+        this.normalPrice = normalPrice;
+        this.memberPrice = memberPrice;
+        this.category = category;
+    }
+
     public Integer getId() {
         return id;
     }

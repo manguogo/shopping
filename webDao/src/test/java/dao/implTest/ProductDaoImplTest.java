@@ -2,7 +2,9 @@ package dao.implTest;
 
 import dao.ProductDao;
 import dao.impl.ProductDaoImpl;
+import entity.Category;
 import entity.Product;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Iterator;
@@ -24,6 +26,28 @@ public class ProductDaoImplTest {
             System.out.println(product.getName());
         }
     }
+
+    @Test
+    public void productInsertTest() {
+        ProductDao pd = ProductDaoImpl.getProductDao();
+        Product p = new Product();
+        Category c = new Category();
+        c.setId(2);
+
+        p.setName("艾泽干红葡萄酒");
+        p.setNormalPrice(299.0);
+        p.setMemberPrice(196.0);
+        p.setCategory(c);
+        pd.productInsert(p);
+
+
+
+
+
+
+
+    }
+
 }
 
 

@@ -67,8 +67,6 @@
                     <a href="categoryUpdate.jsp?id=<%=1 %>">修改</a>
                     |
                     <a href="categoryRemove.jsp?id=<%=1 %>&pid=<%=1%>" name="userRemove">删除</a>
-                    |
-                    <a href="categoryAdd.jsp?id=<%=1%>&grade=<%=1%>&isleaf=<%=1%>&from=categoryList">增加子类别</a>
                 </td>
             </tr>
             <%

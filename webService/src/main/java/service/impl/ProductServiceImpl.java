@@ -23,4 +23,8 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> getAllProducts() {
         return pd.getProducts(true, null);
     }
+
+    public void productAdd(Product product) {
+        pd.productInsert(product);
+    }
 }

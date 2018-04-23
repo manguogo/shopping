@@ -5,10 +5,7 @@ import dao.ProductDao;
 import entity.Category;
 import entity.Product;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,6 +56,33 @@ public class ProductDaoImpl implements ProductDao {
         }
 
         return products;
+
+    }
+
+    public void productInsert(Product product) {
+        String sql = "insert into product (name, descr, normalprice, memberprice, pdate, categoryid) values ( ?, ?, ?, ?, ?, ?)";
+
+        Connection conn = DBConnectors.getConnetion();
+        PreparedStatement pst = null;
+
+        try {
+            pst = conn.prepareStatement(sql);
+            pst.setString(1, product.getName());
+            pst.setString(2, product.getDesc());
+            pst.setDouble(3, product.getNormalPrice());
+            pst.setDouble(4, product.getMemberPrice());
+            pst.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
+            if(product.getCategory().getId() != null)
+                pst.setInt(6, product.getCategory().getId());
+
+            pst.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }finally {
+            DBConnectors.close(conn, pst, null);
+        }
 
     }
 }
