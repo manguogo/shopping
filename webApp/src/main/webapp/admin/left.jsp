@@ -76,17 +76,20 @@
 					<img class="icon5" src="img/coin21.png" />
 				</dd>-->
 			</dl>
+
+			<%--产品管理--%>
 			<dl class="system_log">
 				<dt>
-					<img class="icon1" src="img/coin10.png" /><img class="icon2"
-						src="img/coin09.png" /> 其他管理<img class="icon3"
-						src="img/coin19.png" /><img class="icon4"
-						src="img/coin20.png" />
+					<img class="icon1" src="img/coin10.png" />
+					<img class="icon2" src="img/coin09.png" /> 产品管理
+					<img class="icon3" src="img/coin19.png" />
+					<img class="icon4" src="img/coin20.png" />
 				</dt>
 				<dd>
-					<img class="coin11" src="img/coin111.png" /><img class="coin22"
-						src="img/coin222.png" /><a class="cks">其他管理</a><img class="icon5"
-						src="img/coin21.png" />
+					<img class="coin11" src="img/coin111.png" />
+					<img class="coin22" src="img/coin222.png" />
+					<a class="cks" href="productJSP/productList.jsp" target="main">产品列表</a>
+					<img class="icon5" src="img/coin21.png" />
 				</dd>
 			</dl>
 			<dl class="system_log">
