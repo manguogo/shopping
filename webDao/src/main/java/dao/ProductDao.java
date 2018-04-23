@@ -13,4 +13,6 @@ public interface ProductDao {
     public void productDelete(Product product);
 
     public void productDeleteById(Integer id);
+
+    public Integer productUpdate(Product product);
 }

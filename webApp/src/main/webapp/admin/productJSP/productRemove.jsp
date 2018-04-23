@@ -4,6 +4,7 @@
 <%@ page import="service.impl.ProductServiceImpl" %>
 
 <%
+    //删除页面,对product进行删除
     ProductService ps = ProductServiceImpl.getProductService();
     String strid = request.getParameter("id");
     Integer id = null;

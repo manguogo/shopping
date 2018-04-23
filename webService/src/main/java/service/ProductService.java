@@ -11,4 +11,8 @@ public interface ProductService {
     public void productAdd(Product product);
 
     public void removeProduct(Integer id);
+
+    public Product getAProduct(Integer id);
+
+    public void updateProduct(Product product);
 }

@@ -19,8 +19,10 @@ public class ProductDaoImplTest {
     public void getProductsTest() {
         ProductDao pd = ProductDaoImpl.getProductDao();
         List<Product> products;
-        Product product = null;
+        Product product = new Product();
+        product.setId(9);
         products = pd.getProducts(true, null);
+//        products = pd.getProducts(false, product);
         for(Iterator<Product> productIterator = products.iterator(); productIterator.hasNext();){
             product = productIterator.next();
             System.out.println(product.getName());
@@ -53,6 +55,22 @@ public class ProductDaoImplTest {
         pd.productDelete(product);*/
         //pd.productDeleteById(13);
         //Assert.assertEquals(1, pd.productDeleteById(13));
+    }
+
+    @Test
+    public  void productUpdate(){
+        ProductDao pd = ProductDaoImpl.getProductDao();
+        Product p = new Product();
+        Category c = new Category();
+        c.setId(1);
+        p.setName("PZ干红葡萄酒");
+        p.setId(8);
+        p.setDesc("法国百年佩瑞酒庄");
+        p.setCategory(c);
+       // pd.productUpdate(p);
+
+
+
     }
 
 }

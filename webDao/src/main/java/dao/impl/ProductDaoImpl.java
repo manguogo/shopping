@@ -22,12 +22,18 @@ public class ProductDaoImpl implements ProductDao {
 
     public List<Product> getProducts(Boolean isAllProducts, Product product) {
         String sql = null;
+        Integer id = null;
         if(isAllProducts == true && product == null){
             sql = "select * from product";
         }
-        if(isAllProducts == false){
+        if(isAllProducts == false && product != null){
+            id = product.getId();
             System.out.println("isAllProducts" + isAllProducts);
             sql = "select * from product where 1=1";
+            if (null != id) {
+                sql += " and id = " + id;
+            }
+//            System.out.println(sql);
         }
 
         //数据库连接查询
@@ -135,6 +141,50 @@ public class ProductDaoImpl implements ProductDao {
         Product product = new Product();
         product.setId(id);
         productDelete(product);
+
+    }
+
+    public Integer productUpdate(Product product) {
+        //拼写sql
+        String sql = "update product set name = '" + product.getName() + "'";
+
+        Integer id = product.getId();
+        String desc = product.getDesc();
+        Double normalPrice = product.getNormalPrice();
+        Double memberPrice = product.getMemberPrice();
+        Category category = product.getCategory();
+        if(desc != null && !desc.equals("")){
+            sql += ", descr = '" + desc + "'";
+        }
+        if (null != normalPrice) {
+            sql += ", normalprice = " + normalPrice;
+        }
+        if (null != memberPrice) {
+            sql += ", memberprice = " + memberPrice;
+        }
+        if (null != category) {
+            sql += ", categoryid = " + category.getId();
+        }
+        if(null != id){
+            sql += " where id = " + id;
+        }
+        System.out.println(sql);
+
+        //更新字段
+        Integer productUpdateCount = 0;
+        Connection conn = DBConnectors.getConnetion();
+        PreparedStatement pst = null;
+
+        try {
+            pst = conn.prepareStatement(sql);
+            productUpdateCount = pst.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            DBConnectors.close(conn, pst,null);
+        }
+
+        return productUpdateCount;
 
     }
 

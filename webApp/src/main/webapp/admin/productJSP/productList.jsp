@@ -64,7 +64,7 @@
                 <td><%=product.getDesc()%></td>
                 <td><%=product.getPdate().toLocalDateTime()%></td>
                 <td>
-                    <a href="categoryUpdate.jsp?id=<%=1 %>">修改</a>
+                    <a href="productUpdate.jsp?id=<%=product.getId() %>">修改</a>
                     |
                     <a href="productRemove.jsp?id=<%=product.getId() %>" name="userRemove">删除</a>
                 </td>
