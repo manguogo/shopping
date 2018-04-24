@@ -97,6 +97,12 @@
 					<a class="cks" href="productJSP/productAdd.jsp" target="main">产品添加</a>
 					<img class="icon5" src="img/coin21.png" />
 				</dd>
+				<dd>
+					<img class="coin11" src="img/coin111.png" />
+					<img class="coin22" src="img/coin222.png" />
+					<a class="cks" href="productJSP/productSearch.jsp" target="main">产品搜索</a>
+					<img class="icon5" src="img/coin21.png" />
+				</dd>
 			</dl>
 
 
