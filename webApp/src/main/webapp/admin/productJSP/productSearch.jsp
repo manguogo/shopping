@@ -90,7 +90,7 @@
 <body>
 <div id="pageAll">
 
-    <div class="page ">
+    <div class="page">
         <!-- 商品搜索页面 -->
         <div class="banneradd bor">
             <div class="baTopNo">
@@ -98,7 +98,7 @@
             </div>
             <div class="baBody">
                 <table border="0">
-                    <form action="productSearch.jsp">
+                    <form action="productSearch.jsp"  onsubmit="check()">
 
                         <input type="hidden" name="producthides" id="hides" value="productSearch"   />
                         <%--根据商品价格查询--%>
