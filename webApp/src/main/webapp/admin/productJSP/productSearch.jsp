@@ -29,8 +29,7 @@
             String strMemberPriceE = request.getParameter("memberPriceE");
             String strProductPDateS = request.getParameter("productPDateS");
             String strProductPDateE = request.getParameter("productPDateE");
-            String categoryId = request.getParameter("categoryId");
-            System.out.println(categoryId.toString());
+            String[] categoryIds = request.getParameterValues("categoryId");
 
             Integer[] ids = null;
             String[] names = null;
@@ -217,15 +216,17 @@
 
                                     <%
                                         for(Category c : categoryList){
-                                            if(c.getIsleaf() != null && c.getIsleaf() == 0){
+                                            if(c.getPid() != null && c.getPid() == 0){
                                     %>
-                                        <div class="bbD" style="width: 92%;">
-
+                                        <div class="bbD" >
+                                            <label><input type="checkbox" name="categoryId"  value="<%=c.getId()%>"><%=c.getName()%></label>
                                         </div>
                                     <%
                                             }else {
                                     %>
-
+                                        <span class="categorySearch" >
+                                                <label><input type="checkbox" name="categoryId" value="<%=c.getId()%>"><%=c.getName()%></label>
+                                        </span>
                                     <%
                                             }
                                         }
