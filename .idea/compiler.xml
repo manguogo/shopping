@@ -15,7 +15,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="shopping" target="1.5" />
-      <module name="webApp" target="1.7" />
+      <module name="webApp" target="1.8" />
       <module name="webCommon" target="1.5" />
       <module name="webDao" target="1.5" />
       <module name="webEntity" target="1.5" />
