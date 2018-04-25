@@ -21,6 +21,7 @@
         List<Category> categoryList = cs.getCategories();
 
         if(null != datafrom && datafrom.equals("productSearch")){
+            ProductService ps = ProductServiceImpl.getProductService();
             String strid = request.getParameter("id");
             String strName = request.getParameter("name");
             String strNormalPriceS = request.getParameter("normalPriceS");
@@ -29,7 +30,7 @@
             String strMemberPriceE = request.getParameter("memberPriceE");
             String strProductPDateS = request.getParameter("productPDateS");
             String strProductPDateE = request.getParameter("productPDateE");
-            String[] categoryIds = request.getParameterValues("categoryId");
+            String[] strCategoryIds = request.getParameterValues("categoryId");
 
             Integer[] ids = null;
             String[] names = null;
@@ -39,8 +40,7 @@
             Double memberPriceE = null;
             Timestamp productPDateS = null;
             Timestamp productPDateE = null;
-            Timestamp productTimeS = null;
-            Timestamp productTimeE = null;
+            Integer[] categoryIds = null;
 
             if (strid != null && !strid.equals("")) {
                 String[] idArray = strid.split(" +");
@@ -70,15 +70,22 @@
                 memberPriceE = Double.parseDouble(strMemberPriceE);
             }
             if (null != strProductPDateS && !strProductPDateS.equals("")) {
-                productTimeS = Common.stringToTimestamp(strProductPDateS);
-
+                productPDateS = Common.stringToTimestamp(strProductPDateS);
             }
             if (null != strProductPDateE && !strProductPDateE.equals("")) {
-                productTimeE = Common.stringToTimestamp(strProductPDateE);
-
+                productPDateE = Common.stringToTimestamp(strProductPDateE);
             }
-
-
+            if (null != strCategoryIds) {
+                categoryIds = new Integer[strCategoryIds.length];
+                for (int i = 0; i < strCategoryIds.length; i++) {
+                    categoryIds[i] = Integer.parseInt(strCategoryIds[i]);
+                }
+            }
+            List<Product> products = ps.searchProducts( ids, names,
+                                                        normalPriceS, normalPriceE,
+                                                        memberPriceS, memberPriceE,
+                                                        productPDateS, productPDateE,
+                                                        categoryIds);
             response.sendRedirect("productSearch.jsp");
             return;
         }

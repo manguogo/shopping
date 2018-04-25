@@ -7,6 +7,7 @@ import entity.Product;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.sql.Timestamp;
 import java.util.Iterator;
 import java.util.List;
 
@@ -72,6 +73,27 @@ public class ProductDaoImplTest {
 
 
     }
+
+    @Test
+    public void findProducts(){
+        Integer[] ids = {1, 2};
+        String[] names = {"葡萄" };
+        ProductDao pd = ProductDaoImpl.getProductDao();
+        Integer[] categoryIds = {2, 12};
+        List<Product> products = null;
+        products = pd.findProducts(ids, null,
+                null, null,
+                null, null,
+                null, null,
+                null);
+        for (Product p : products) {
+            System.out.println(p.getName());
+        }
+
+    }
+
+
+
 
 }
 

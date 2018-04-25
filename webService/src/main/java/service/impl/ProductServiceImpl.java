@@ -5,6 +5,7 @@ import dao.impl.ProductDaoImpl;
 import entity.Product;
 import service.ProductService;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public class ProductServiceImpl implements ProductService {
@@ -30,6 +31,18 @@ public class ProductServiceImpl implements ProductService {
         p.setId(id);
         products = pd.getProducts(false, p);
         return products.get(0);
+    }
+
+    public List<Product> searchProducts(Integer[] ids, String[] names,
+                                        Double normalPriceS, Double normalPriceE,
+                                        Double memberPriceS, Double memberPriceE,
+                                        Timestamp productPDateS, Timestamp productPDateE,
+                                        Integer[] categoryIds) {
+        return pd.findProducts( ids, names,
+                normalPriceS,  normalPriceE,
+                memberPriceS, memberPriceE,
+                productPDateS, productPDateE,
+                categoryIds);
     }
 
     public void updateProduct(Product product) {

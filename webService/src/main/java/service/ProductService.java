@@ -2,6 +2,7 @@ package service;
 
 import entity.Product;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public interface ProductService {
@@ -15,4 +16,10 @@ public interface ProductService {
     public Product getAProduct(Integer id);
 
     public void updateProduct(Product product);
+
+    public List<Product> searchProducts(Integer[] ids, String[] names,
+                                        Double normalPriceS, Double normalPriceE,
+                                        Double memberPriceS, Double memberPriceE,
+                                        Timestamp productPDateS, Timestamp productPDateE,
+                                        Integer[] categoryIds);
 }

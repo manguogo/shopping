@@ -15,7 +15,7 @@
     <%
         ProductService ps = ProductServiceImpl.getProductService();
         List<Product> products = ps.getAllProducts();
-        Product product;
+        Product product = null;
     %>
     <title></title>
 
@@ -52,8 +52,9 @@
             </tr>
 
             <%
-                for(Iterator<Product> productIterator = products.iterator();productIterator.hasNext();){
-                  product = productIterator.next();
+                for(Iterator<Product> productIterator = products.iterator(); productIterator.hasNext();){
+                    product = productIterator.next();
+
             %>
             <tr>
                 <td><%=product.getId()%></td>
