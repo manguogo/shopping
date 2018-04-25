@@ -3,6 +3,9 @@
 <%@ page import="service.impl.ProductServiceImpl" %>
 <%@ page import="entity.Product" %>
 <%@ page import="entity.Category" %>
+<%@ page import="service.CategoryService" %>
+<%@ page import="service.impl.CategoryServiceImpl" %>
+<%@ page import="java.util.List" %>
 
 
 <html>
@@ -10,8 +13,11 @@
     <%
         request.setCharacterEncoding("UTF-8");
         String producthides = request.getParameter("producthides");
+        ProductService ps = ProductServiceImpl.getProductService();
+        CategoryService cs = CategoryServiceImpl.getCategoryService();
+        List<Category> categoryList =  cs.getCategories();
+
         if(producthides != null && producthides.equals("productAdd")){
-            ProductService ps = ProductServiceImpl.getProductService();
             Product product = null;
             Category category = new Category();
             String name = request.getParameter("name");
@@ -46,6 +52,7 @@
     %>
     <title>增加商品类型</title>
     <link rel="stylesheet" type="text/css" href="../css/css.css" />
+    <link rel="stylesheet" href="../css/productSearch.css">
     <script type="text/javascript" src="../js/jquery.min.js"></script>
 </head>
 <body>
@@ -121,8 +128,31 @@
                             </td>
                             <td>
                                 <div class="bbD">
-                                    <input name="categoryId" type="text" class="input3"  />
+                                    <select name="categoryId">
+                                        <%
+                                            for(Category c : categoryList){
+                                                String pre = "－－";
+                                                for(int i = 0; i < c.getGrade()-1; i++){
+                                                    pre += "－－";
+                                                }
+                                                if(c.getIsleaf()!=null && c.getIsleaf() == 0){
+
+                                        %>
+                                            <option value="<%=c.getId()%>" class="input3"   disabled><%=pre + c.getName()%></option>
+                                        <%
+                                                }else{
+                                        %>
+                                            <option value="<%=c.getId()%>" class="input3"  ><%=pre +c.getName()%></option>
+                                        <%
+                                                }
+                                            }
+                                        %>
+                                    </select>
                                 </div>
+
+                                    <%--<input name="categoryId" type="text" class="input3"  />--%>
+
+
                             </td>
                         </tr>
                         <tr>

@@ -4,6 +4,12 @@
 <%@ page import="entity.Product" %>
 <%@ page import="entity.Category" %>
 <%@ page import="java.sql.Timestamp" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="util.Common" %>
+<%@ page import="service.CategoryService" %>
+<%@ page import="service.impl.CategoryServiceImpl" %>
+<%@ page import="java.util.List" %>
 
 
 <html>
@@ -11,6 +17,9 @@
     <%
         request.setCharacterEncoding("UTF-8");
         String datafrom = request.getParameter("producthides");
+        CategoryService cs = CategoryServiceImpl.getCategoryService();
+        List<Category> categoryList = cs.getCategories();
+
         if(null != datafrom && datafrom.equals("productSearch")){
             String strid = request.getParameter("id");
             String strName = request.getParameter("name");
@@ -19,8 +28,9 @@
             String strMemberPriceS = request.getParameter("memberPriceS");
             String strMemberPriceE = request.getParameter("memberPriceE");
             String strProductPDateS = request.getParameter("productPDateS");
-            String strProductPDateE = request.getParameter("productPDateS");
-
+            String strProductPDateE = request.getParameter("productPDateE");
+            String categoryId = request.getParameter("categoryId");
+            System.out.println(categoryId.toString());
 
             Integer[] ids = null;
             String[] names = null;
@@ -30,9 +40,8 @@
             Double memberPriceE = null;
             Timestamp productPDateS = null;
             Timestamp productPDateE = null;
-
-
-
+            Timestamp productTimeS = null;
+            Timestamp productTimeE = null;
 
             if (strid != null && !strid.equals("")) {
                 String[] idArray = strid.split(" +");
@@ -62,10 +71,12 @@
                 memberPriceE = Double.parseDouble(strMemberPriceE);
             }
             if (null != strProductPDateS && !strProductPDateS.equals("")) {
-                productPDateS = Timestamp.valueOf(strProductPDateS);
+                productTimeS = Common.stringToTimestamp(strProductPDateS);
+
             }
             if (null != strProductPDateE && !strProductPDateE.equals("")) {
-                productPDateE = Timestamp.valueOf(strProductPDateE);
+                productTimeE = Common.stringToTimestamp(strProductPDateE);
+
             }
 
 
@@ -81,11 +92,8 @@
     <script type="text/javascript" src="../js/jquery.min.js"></script>
     <script src="../js/productSearch.js"></script>
 
-    <style>
-        td {
-            border:0px;
-        }
-    </style>
+    <link rel="stylesheet" href="../css/productSearch.css">
+
 </head>
 <body>
 <div id="pageAll">
@@ -147,6 +155,7 @@
                             </td>
                         </tr>--%>
                         <%--根据商品价格查询--%>
+                        <div>
                         <tr>
                             <td>
 
@@ -170,6 +179,8 @@
                                 </div>
                             </td>
                         </tr>
+                        </div>
+                        <div>
                         <tr>
                             <td>
 
@@ -193,22 +204,40 @@
                                 </div>
                             </td>
                         </tr>
+                        </div>
                         <%--根据商品类别查询--%>
+                        <div>
                         <tr>
                             <td>
-
                                 <div class="bbD">
                                     商品类别:
                                 </div>
                             </td>
-                            <td>
-                                <div class="bbD">
-                                    <input name="categoryId" type="text" class="input3" />
-                                </div>
+                            <td colspan="2">
+
+                                    <%
+                                        for(Category c : categoryList){
+                                            if(c.getIsleaf() != null && c.getIsleaf() == 0){
+                                    %>
+                                        <div class="bbD" style="width: 92%;">
+
+                                        </div>
+                                    <%
+                                            }else {
+                                    %>
+
+                                    <%
+                                            }
+                                        }
+                                    %>
+
+
                             </td>
                         </tr>
-                        <tr>
+                        </div>
+
                         <%--根据时间查询--%>
+                        <div>
                         <tr>
                             <td>
 
@@ -232,6 +261,7 @@
                                 </div>
                             </td>
                         </tr>
+                        </div>
                         <tr>
                             <td colspan="2" >
                                 <div class="bbD">
