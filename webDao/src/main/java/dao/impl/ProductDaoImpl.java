@@ -324,7 +324,7 @@ public class ProductDaoImpl implements ProductDao {
         }finally {
             DBConnectors.close(conn, pst, rs);
         }
-        System.out.println(sql);
+//        System.out.println(sql);
 
         return products;
     }

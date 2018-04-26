@@ -19,8 +19,12 @@ public interface CategoryDao {
 
     public void deleteCategoryById(Integer id);
 
+    public Integer updateCategory(Category category);
+
     //通过子类别寻找父类别的子类
     public List<Category> findChildCategory(Category c);
 
-    public Integer updateCategory(Category category);
+    //通过父类别寻找所有子类别
+    public List<Category> findChileCategoriesByParent(Category parentCategory);
+
 }

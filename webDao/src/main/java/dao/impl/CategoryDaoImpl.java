@@ -24,66 +24,8 @@ public class CategoryDaoImpl implements CategoryDao {
         return  cd;
     }
 
-    public List<Category> getAllCategories(Boolean isAllCategories, Category category) {
-        String sql = "select * from category";
-        if(isAllCategories == false)
-            sql += " where id=" + category.getId();
-        Connection conn = DBConnectors.getConnetion();
-        PreparedStatement pst = null;
-        ResultSet rs = null;
-        Category c = null;
-        List<Category> categories  = new ArrayList<Category>();
-
-        try {
-            pst = conn.prepareStatement(sql);
-            rs = pst.executeQuery();
-            while (rs.next()){
-                c = new Category(rs.getInt("id"), rs.getInt("pid"),
-                                 rs.getString("name"), rs.getString("desc"),
-                                 rs.getInt("grade"), rs.getInt("isleaf"));
-                categories.add(c);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }finally {
-            DBConnectors.close(conn, pst, rs);
-        }
-
-        return categories;
-    }
-
-
-    //通过子类别寻找父类别的子类
-    public List<Category> findChildCategory(Category c){
-        String sql = "select * from category where pid = " + c.getPid();
-        Connection conn = DBConnectors.getConnetion();
-        PreparedStatement pst = null;
-        ResultSet rs = null;
-        List<Category> categories  = new ArrayList<Category>();
-
-        try {
-            pst = conn.prepareStatement(sql);
-            rs = pst.executeQuery();
-            while (rs.next()){
-                c = new Category(rs.getInt("id"), rs.getInt("pid"),
-                        rs.getString("name"), rs.getString("desc"),
-                        rs.getInt("grade"), rs.getInt("isleaf"));
-                categories.add(c);
-            }
-
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }finally {
-            DBConnectors.close(conn, pst, rs);
-        }
-
-        return categories;
-
-    }
-
     //更改传递过来的category,若返回值是-1则可以判断未传递category的id或是名称
+
     public Integer updateCategory(Category category) {
         String name = category.getName();
         String desc = category.getDesc();
@@ -115,8 +57,8 @@ public class CategoryDaoImpl implements CategoryDao {
 
         return isUpdate;
     }
-
     //通过子类别寻找父类别下是否还有子节点
+
     public boolean hasChildCategory(Category c){
         String sql = "select COUNT(*) as count from category where pid = " + c.getPid();
 
@@ -146,7 +88,6 @@ public class CategoryDaoImpl implements CategoryDao {
         return hasChildes;
 
     }
-
     public Boolean insertCategory(Category c) {
         String sql = "insert into category(id, pid, category.name, category.desc, grade, isleaf) values(null, ?, ?, ?, ?, ?)";
         Connection conn = DBConnectors.getConnetion();
@@ -192,6 +133,7 @@ public class CategoryDaoImpl implements CategoryDao {
     }
 
     //通过子类别改变父类别的isleaf属性,当isleaf为true时父类是叶子节点,当isleaf为false时父类节点不为叶子节点
+
     public void updateCategoryLeaf(Category c, boolean isleaf) {
         int isAleaf = 0;
         if(isleaf == true){
@@ -211,7 +153,6 @@ public class CategoryDaoImpl implements CategoryDao {
             DBConnectors.close(conn, pst, null);
         }
     }
-
     public void deleteCategoryById(Integer id) {
         Category c = new Category();
         c.setId(id);
@@ -252,6 +193,91 @@ public class CategoryDaoImpl implements CategoryDao {
             DBConnectors.close(conn, pst, null);
         }
         return isDelete;
+    }
+
+    public List<Category> getAllCategories(Boolean isAllCategories, Category category) {
+        String sql = "select * from category";
+        if(isAllCategories == false)
+            sql += " where id=" + category.getId();
+        Connection conn = DBConnectors.getConnetion();
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Category c = null;
+        List<Category> categories  = new ArrayList<Category>();
+
+        try {
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            while (rs.next()){
+                c = new Category(rs.getInt("id"), rs.getInt("pid"),
+                        rs.getString("name"), rs.getString("desc"),
+                        rs.getInt("grade"), rs.getInt("isleaf"));
+                categories.add(c);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            DBConnectors.close(conn, pst, rs);
+        }
+
+        return categories;
+    }
+
+
+    //通过子类别寻找父类别的子类
+    public List<Category> findChildCategory(Category c){
+        String sql = "select * from category where pid = " + c.getPid();
+        Connection conn = DBConnectors.getConnetion();
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        List<Category> categories  = new ArrayList<Category>();
+
+        try {
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            while (rs.next()){
+                c = new Category(rs.getInt("id"), rs.getInt("pid"),
+                        rs.getString("name"), rs.getString("desc"),
+                        rs.getInt("grade"), rs.getInt("isleaf"));
+                categories.add(c);
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            DBConnectors.close(conn, pst, rs);
+        }
+
+        return categories;
+
+    }
+
+    public List<Category> findChileCategoriesByParent(Category parentCategory) {
+        String sql = "select * from category where pid = " + parentCategory.getId();
+        Connection conn = DBConnectors.getConnetion();
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        List<Category> categories  = new ArrayList<Category>();
+        Category category = null;
+
+        try {
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            while (rs.next()){
+                category = new Category(rs.getInt("id"), rs.getInt("pid"),
+                        rs.getString("name"), rs.getString("desc"),
+                        rs.getInt("grade"), rs.getInt("isleaf"));
+                categories.add(category);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            DBConnectors.close(conn, pst, rs);
+        }
+
+        return categories;
     }
 
 }

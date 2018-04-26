@@ -3,6 +3,10 @@
 <%@ page import="service.impl.ProductServiceImpl" %>
 <%@ page import="entity.Product" %>
 <%@ page import="entity.Category" %>
+<%@ page import="service.CategoryService" %>
+<%@ page import="service.impl.CategoryServiceImpl" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
 
 
 <html>
@@ -10,6 +14,14 @@
     <%
         request.setCharacterEncoding("UTF-8");
         String strid = request.getParameter("id");
+        CategoryService cs = CategoryServiceImpl.getCategoryService();
+        Category[] parentCategories = {new Category()};
+        parentCategories[0].setId(0);
+        List<Category> categoryList = new ArrayList<Category>();
+        cs.getChildCategories(parentCategories, categoryList);
+
+
+        Category category = new Category();
         Product p = new Product();
         ProductService ps = ProductServiceImpl.getProductService();
         String productUpdateHide = request.getParameter("producthides");
@@ -17,7 +29,6 @@
         //如果修改后的页面提交,修改已提交的信息
         if(null != productUpdateHide && productUpdateHide.equals("productUpdate")){
             Product product = null;
-            Category category = new Category();
             String strHideId = request.getParameter("hideId");
             Integer hideId = null;
             String name = request.getParameter("name");
@@ -27,6 +38,8 @@
             Double normalPrice = 0.0;
             Double memberPrice = 0.0;
             Integer cid = null;
+
+
             if(null == strHideId || null == name || null == strCID || name.equals("") || strCID.equals("")){
                 response.sendRedirect("productAdd.jsp");
                 return;
@@ -42,8 +55,8 @@
             }
             if(strCID != null) {
                 cid = Integer.parseInt(strCID);
+                category.setId(cid);
             }
-            category.setId(cid);
             product = new Product(request.getParameter("name"), request.getParameter("desc"),
                     normalPrice, memberPrice, category);
             product.setId(hideId);
@@ -54,7 +67,6 @@
         //如果从是list页面提交过来的产品,则查询此产品的相关信息
         if (null != strid && !strid.equals("")) {
             Integer id = Integer.parseInt(strid);
-//            System.out.println(id);
             p = ps.getAProduct(id);
         }
 
@@ -141,17 +153,45 @@
                             </td>
                         </tr>
                         <tr>
+
                             <td>
 
                                 <div class="bbD">
                                     商品类别:
                                 </div>
                             </td>
+
                             <td>
-                                <div class="bbD">
-                                    <input name="categoryId" type="text" class="input3" value="<%=p.getCategory().getId()%>" />
+                                <div class="bbD" style="width: 100%">
+                                    <select name="categoryId" style="width: 92%">
+
+                                        <%
+
+                                            for(Category c : categoryList){
+                                                String pre = "";
+                                                if(c.getId() != 0) {
+                                                    for (int j = 1; j < c.getGrade(); j++) {
+                                                        pre += "--";
+                                                    }
+                                                }
+
+                                                if(c.getId() !=0){
+                                                    if(c.getPid() == 0){
+                                        %>
+                                        <option value="<%=c.getId() %>" class="input3"  disabled><%=c.getName()%></option>
+                                        <%
+                                                     }else {
+                                        %>
+                                        <option value="<%=c.getId() %>" class="input3" ><%=pre + c.getName()%></option>
+                                        <%
+                                                     }
+                                                }
+                                            }
+                                        %>
+                                    </select>
                                 </div>
                             </td>
+
                         </tr>
                         <tr>
                         <tr>

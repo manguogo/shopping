@@ -1,3 +1,5 @@
+package test;
+
 import entity.User;
 import org.junit.Test;
 import service.UserService;

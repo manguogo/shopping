@@ -5,6 +5,7 @@ import dao.impl.CategoryDaoImpl;
 import entity.Category;
 import service.CategoryService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryServiceImpl implements CategoryService {
@@ -22,6 +23,8 @@ public class CategoryServiceImpl implements CategoryService {
         CategoryDao cd = CategoryDaoImpl.getCategoryDao();
         return cd.getAllCategories(true, null);
     }
+
+
 
     public void addCategory(Category c) {
         CategoryDao cd = CategoryDaoImpl.getCategoryDao();
@@ -52,6 +55,27 @@ public class CategoryServiceImpl implements CategoryService {
         CategoryDao cd = CategoryDaoImpl.getCategoryDao();
         cd.updateCategory(category);
     }
+
+    //通过递归方式得到传入的父类所有子类(包括自己), 使用桶子backCategories来获取所有的数据
+    public void getChildCategories(Category[] parentCcategories, List<Category> backCategories) {
+        CategoryDao cd = CategoryDaoImpl.getCategoryDao();
+        List<Category> findedCategories = null;
+
+        for(int i = 0; i < parentCcategories.length; i++) {
+            findedCategories = cd.findChileCategoriesByParent(parentCcategories[i]);
+            for(int j = 0; j < findedCategories.size(); j++) {
+                backCategories.add(findedCategories.get(j));
+                if (findedCategories.get(j).getIsleaf() == 0) {
+                    Category[] cts = {findedCategories.get(j)};
+                    getChildCategories(cts, backCategories);
+                }
+            }
+        }
+
+
+
+    }
+
 }
 
 

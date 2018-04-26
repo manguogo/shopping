@@ -3,6 +3,7 @@
 <%@ page import="service.CategoryService" %>
 <%@ page import="service.impl.CategoryServiceImpl" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
 
 
 <html>
@@ -10,7 +11,10 @@
     <%
         request.setCharacterEncoding("UTF-8");
         CategoryService cs = CategoryServiceImpl.getCategoryService();
-        List<Category> categoryList = cs.getCategories();
+        List<Category> categoryList = new ArrayList<Category>();
+        Category[] parentCategories = {new Category()};
+        parentCategories[0].setId(0);
+        cs.getChildCategories(parentCategories, categoryList);
 
 
     %>
@@ -22,7 +26,7 @@
     <link rel="stylesheet" href="../css/productSearch.css">
 
 </head>
-<body>
+<body>.
 <div id="pageAll">
 
     <div class="page">
@@ -143,18 +147,20 @@
                             <td colspan="2">
                                     <%
                                         for(Category c : categoryList){
-                                            if(c.getPid() != null && c.getPid() == 0){
+                                            if(c.getId() != 0){
+                                                if(c.getPid() != null && c.getPid() == 0){
                                     %>
                                         <div class="bbD" >
                                             <label><input type="checkbox" name="categoryId"  value="<%=c.getId()%>"><%=c.getName()%></label>
                                         </div>
                                     <%
-                                            }else {
+                                                }else {
                                     %>
                                         <span class="categorySearch" >
-                                                <label><input type="checkbox" name="categoryId" value="<%=c.getId()%>"><%=c.getName()%></label>
+                                                <label><input type="checkbox" name="categoryId"  value="<%=c.getId()%>"><%=c.getName()%></label>
                                         </span>
                                     <%
+                                                }
                                             }
                                         }
                                     %>

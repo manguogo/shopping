@@ -6,6 +6,7 @@
 <%@ page import="service.CategoryService" %>
 <%@ page import="service.impl.CategoryServiceImpl" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
 
 
 <html>
@@ -15,7 +16,11 @@
         String producthides = request.getParameter("producthides");
         ProductService ps = ProductServiceImpl.getProductService();
         CategoryService cs = CategoryServiceImpl.getCategoryService();
-        List<Category> categoryList =  cs.getCategories();
+        Category[] parentCategories = {new Category()};
+        parentCategories[0].setId(0);
+        List<Category> categoryList = new ArrayList<Category>();
+        cs.getChildCategories(parentCategories, categoryList);
+
 
         if(producthides != null && producthides.equals("productAdd")){
             Product product = null;
@@ -131,20 +136,23 @@
                                     <select name="categoryId">
                                         <%
                                             for(Category c : categoryList){
-                                                String pre = "－－";
-                                                for(int i = 0; i < c.getGrade()-1; i++){
-                                                    pre += "－－";
-                                                }
-                                                if(c.getIsleaf()!=null && c.getIsleaf() == 0){
+                                                String pre = "";
+                                                if(c.getId() != 0){
+                                                    for(int i = 0; i < c.getGrade()-1; i++){
+                                                        pre += "－－";
+                                                    }
+
+                                                     if(c.getIsleaf() != null && c.getIsleaf() == 0){
 
                                         %>
                                             <option value="<%=c.getId()%>" class="input3"   disabled><%=pre + c.getName()%></option>
                                         <%
-                                                }else{
+                                                     }else{
                                         %>
                                             <option value="<%=c.getId()%>" class="input3"  ><%=pre +c.getName()%></option>
                                         <%
-                                                }
+                                                     }
+                                                 }
                                             }
                                         %>
                                     </select>

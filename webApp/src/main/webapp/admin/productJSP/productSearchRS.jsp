@@ -74,6 +74,7 @@
                 productPDateS = Common.stringToTimestamp(strProductPDateS);
             }
             if (null != strProductPDateE && !strProductPDateE.equals("")) {
+//                System.out.println(strProductPDateE);
                 productPDateE = Common.stringToTimestamp(strProductPDateE);
             }
             if (null != strCategoryIds) {
@@ -140,7 +141,7 @@
                 <td><%=product.getMemberPrice()%></td>
                 <td><%=product.getCategory().getId()%></td>
                 <td><%=product.getDesc()%></td>
-                <td><%=product.getPdate().toLocalDateTime()%></td>
+                <td><%=product.getPdate()%></td>
                 <td>
                     <a href="productUpdate.jsp?id=<%=product.getId() %>">修改</a>
                     |
