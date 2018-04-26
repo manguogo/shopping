@@ -84,12 +84,20 @@ public class ProductDaoImplTest {
         products = pd.findProducts(ids, null,
                 null, null,
                 null, null,
-                null, null,
+                new Timestamp(Long.parseLong("00000000000000")), null,
                 null);
         for (Product p : products) {
             System.out.println(p.getName());
         }
 
+    }
+    @Test
+    public void timestamp(){
+        Long currentTime = System.currentTimeMillis();
+        Timestamp time = new Timestamp(currentTime);
+        String str = time.toString();
+        str = str.substring(0,19);
+        System.out.println(str);
     }
 
 

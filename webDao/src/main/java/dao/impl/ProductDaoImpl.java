@@ -279,7 +279,7 @@ public class ProductDaoImpl implements ProductDao {
             if (null == productPDateE) {
                 productPDateStr = "";
             } else {
-                productPDateStr = " '"+ new Timestamp(Long.parseLong("00000000000000")) +"' and '" + productPDateE + "'";
+                productPDateStr = " '"+ (new Timestamp(Long.parseLong("00000000000000"))).toString().substring(0, 19) +"' and '" + productPDateE.toString().substring(0,19)  + "'";
                 sql += " and pdate between" + productPDateStr;
                 sql = sql.replace("1=0", "1=1");
             }
