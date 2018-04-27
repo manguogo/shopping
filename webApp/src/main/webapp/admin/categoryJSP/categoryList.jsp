@@ -15,6 +15,7 @@
         CategoryService cs = CategoryServiceImpl.getCategoryService();
         categoryList = cs.getCategories();
         String isleaf = null;
+
     %>
     <title></title>
 
@@ -77,7 +78,6 @@
             <%
                 }
             %>
-        <%=session.getAttribute("login") %>
 
         </table>
         <p class="msg"></p>

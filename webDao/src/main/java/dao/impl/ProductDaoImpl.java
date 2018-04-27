@@ -20,52 +20,6 @@ public class ProductDaoImpl implements ProductDao {
         return pd;
     }
 
-    public List<Product> getProducts(Boolean isAllProducts, Product product) {
-        String sql = null;
-        Integer id = null;
-        if(isAllProducts == true && product == null){
-            sql = "select * from product";
-        }
-        if(isAllProducts == false && product != null){
-            id = product.getId();
-            System.out.println("isAllProducts" + isAllProducts);
-            sql = "select * from product where 1=1";
-            if (null != id) {
-                sql += " and id = " + id;
-            }
-//            System.out.println(sql);
-        }
-
-        //数据库连接查询
-        Connection conn = DBConnectors.getConnetion();
-        PreparedStatement pst = null;
-        ResultSet rs = null;
-        List<Product> products = new ArrayList<Product>();
-        Product p = null;
-        Category category = null;
-
-        try {
-            pst = conn.prepareStatement(sql);
-            rs = pst.executeQuery();
-            while (rs.next()){
-                category = new Category();
-                category.setId(rs.getInt("categoryid"));
-                p = new Product(rs.getInt("id"), rs.getString("name"),
-                        rs.getString("descr"), rs.getDouble("normalprice"),
-                        rs.getDouble("memberprice"), rs.getTimestamp("pdate"),
-                        category);
-                products.add(p);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }finally {
-            DBConnectors.close(conn, pst, rs);
-        }
-
-        return products;
-
-    }
-
     public void productInsert(Product product) {
         String sql = "insert into product (name, descr, normalprice, memberprice, pdate, categoryid) values ( ?, ?, ?, ?, ?, ?)";
 
@@ -186,6 +140,52 @@ public class ProductDaoImpl implements ProductDao {
         }
 
         return productUpdateCount;
+
+    }
+
+    public List<Product> getProducts(Boolean isAllProducts, Product product,Integer pageSize, Integer pageNum) {
+        String sql = null;
+        Integer id = null;
+        if(isAllProducts == true && product == null){
+            sql = "select * from product limit " + (pageNum -1) * pageSize + "," + pageSize;
+        }
+        if(isAllProducts == false && product != null){
+            id = product.getId();
+            System.out.println("isAllProducts" + isAllProducts);
+            sql = "select * from product where 1=1";
+            if (null != id) {
+                sql += " and id = " + id;
+            }
+//            System.out.println(sql);
+        }
+
+        //数据库连接查询
+        Connection conn = DBConnectors.getConnetion();
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        List<Product> products = new ArrayList<Product>();
+        Product p = null;
+        Category category = null;
+
+        try {
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            while (rs.next()){
+                category = new Category();
+                category.setId(rs.getInt("categoryid"));
+                p = new Product(rs.getInt("id"), rs.getString("name"),
+                        rs.getString("descr"), rs.getDouble("normalprice"),
+                        rs.getDouble("memberprice"), rs.getTimestamp("pdate"),
+                        category);
+                products.add(p);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            DBConnectors.close(conn, pst, rs);
+        }
+
+        return products;
 
     }
 
@@ -327,6 +327,29 @@ public class ProductDaoImpl implements ProductDao {
 //        System.out.println(sql);
 
         return products;
+    }
+
+    public Integer getProductPageCount(Integer pageSize) {
+        String sql = "select count(id) from product";
+        Integer count = null;
+        Integer pageCount = null;
+
+        Connection conn = DBConnectors.getConnetion();
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+
+        try {
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            rs.next();
+            count = Integer.valueOf(rs.getInt(1));
+            pageCount = (count + pageSize -1)/pageSize;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            DBConnectors.close(conn, pst, rs);
+        }
+        return pageCount;
     }
 
 }

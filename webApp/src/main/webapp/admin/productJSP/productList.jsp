@@ -13,8 +13,21 @@
 <head>
 
     <%
+        request.setCharacterEncoding("UTF-8");
         ProductService ps = ProductServiceImpl.getProductService();
-        List<Product> products = ps.getAllProducts();
+        Integer pageSize = 5;
+        Integer pageNum  = 1;
+        Integer pageCount = ps.getPageCount(pageSize);
+        if (request.getParameter("page") != null) {
+            pageNum = Integer.parseInt(request.getParameter("page"));
+            if(pageNum < 1){
+                pageNum = 1;
+            }
+            if (pageNum > pageCount){
+                pageNum = pageCount;
+            }
+        }
+        List<Product> products = ps.getAllProducts(pageSize, pageNum);
         Product product = null;
     %>
     <title></title>
@@ -33,24 +46,36 @@
 </head>
 
 <body>
-
+<h2>产品列表</h2>
 
 <!-- MainForm -->
 <div id="MainForm">
     <div class="form_boxA">
-        <h2>产品列表</h2>
         <table cellpadding="0" cellspacing="0">
-            <tr>
+            <thead>
+                <tr>
 
-                <th>产品ID</th>
-                <th>产品名称</th>
-                <th>产品市场价</th>
-                <th>产品会员价</th>
-                <th>产品类别</th>
-                <th>产品描述</th>
-                <th>产品上架时间</th>
-            </tr>
+                    <th>产品ID</th>
+                    <th>产品名称</th>
+                    <th>产品市场价</th>
+                    <th>产品会员价</th>
+                    <th>产品类别</th>
+                    <th>产品描述</th>
+                    <th>产品上架时间</th>
 
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+
+                    <td colspan="7"><a href="productList.jsp?page=1">首页</a>&emsp;
+                        <a href="productList.jsp?page=<%=pageNum - 1 %>">上一页</a>&emsp;
+                        <a href="productList.jsp?page=<%=pageNum + 1 %>">下一页</a>&emsp;
+                        <a href="productList.jsp?page=<%=pageCount%>">尾页</a>&emsp;
+                    </td>
+
+                </tr>
+            </tfoot>
             <%
                 for(Iterator<Product> productIterator = products.iterator(); productIterator.hasNext();){
                     product = productIterator.next();
@@ -69,12 +94,16 @@
                     |
                     <a href="productRemove.jsp?id=<%=product.getId() %>" name="userRemove">删除</a>
                 </td>
-            </tr>
             <%
                 }
             %>
+            </tr>
+            <tr>
 
+
+            </tr>
         </table>
+
         <p class="msg"></p>
     </div>
 </div>

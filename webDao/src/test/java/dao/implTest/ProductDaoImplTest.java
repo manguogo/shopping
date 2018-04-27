@@ -22,7 +22,7 @@ public class ProductDaoImplTest {
         List<Product> products;
         Product product = new Product();
         product.setId(9);
-        products = pd.getProducts(true, null);
+        products = pd.getProducts(true, null, 5, 4);
 //        products = pd.getProducts(false, product);
         for(Iterator<Product> productIterator = products.iterator(); productIterator.hasNext();){
             product = productIterator.next();
@@ -98,6 +98,15 @@ public class ProductDaoImplTest {
         String str = time.toString();
         str = str.substring(0,19);
         System.out.println(str);
+    }
+
+    @Test
+    public void getProductPageCountTest(){
+        ProductDao pd = ProductDaoImpl.getProductDao();
+        Integer pageCount = null;
+        pageCount = pd.getProductPageCount(5);
+        System.out.println(pageCount);
+
     }
 
 
