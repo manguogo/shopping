@@ -79,7 +79,7 @@
                         <a href="productList.jsp?page=<%=pageNum - 1 %>">上一页</a>&emsp;
                         <a href="productList.jsp?page=<%=pageNum + 1 %>">下一页</a>&emsp;
                         <a href="productList.jsp?page=<%=pageCount%>">尾页</a>&emsp;&emsp;
-                        <span>共<%=pageCount%>页</span>&emsp;
+                        <span>共<%=pageCount %>页</span>&emsp;
                         <span>
                             <button type="button" onclick="jump()">跳转</button>
                             至&nbsp;<input type="text" name="page" id="page">

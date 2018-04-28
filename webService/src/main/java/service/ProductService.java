@@ -1,6 +1,7 @@
 package service;
 
 import entity.Product;
+import productSearchTD.ProductSearch;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -18,10 +19,7 @@ public interface ProductService {
     //product查询
     public List<Product> getAllProducts(Integer pageSize, Integer pageNum);
 
-    public List<Product> searchProducts(Integer[] ids, String[] names,
-                                        Double normalPriceS, Double normalPriceE,
-                                        Double memberPriceS, Double memberPriceE,
-                                        Timestamp productPDateS, Timestamp productPDateE,
-                                        Integer[] categoryIds);
+    //需要传入pageCount,对其进行程序内的赋值
+    public List<Product> searchProducts(ProductSearch productSearchCondition, Integer pageNum, Integer pageSize, Integer[] pageCount);
     public Integer getPageCount(Integer pageSize);
 }

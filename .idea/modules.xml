@@ -8,6 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/webDao/webDao.iml" filepath="$PROJECT_DIR$/webDao/webDao.iml" />
       <module fileurl="file://$PROJECT_DIR$/webEntity/webEntity.iml" filepath="$PROJECT_DIR$/webEntity/webEntity.iml" />
       <module fileurl="file://$PROJECT_DIR$/webService/webService.iml" filepath="$PROJECT_DIR$/webService/webService.iml" />
+      <module fileurl="file://$PROJECT_DIR$/webTransationData/webTransationData.iml" filepath="$PROJECT_DIR$/webTransationData/webTransationData.iml" />
     </modules>
   </component>
 </project>

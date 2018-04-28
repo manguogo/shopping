@@ -4,10 +4,13 @@ import common.DBConnectors;
 import dao.ProductDao;
 import entity.Category;
 import entity.Product;
+import productSearchTD.ProductSearch;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ProductDaoImpl implements ProductDao {
     private static ProductDao pd;
@@ -189,13 +192,19 @@ public class ProductDaoImpl implements ProductDao {
 
     }
 
-    public List<Product> findProducts(Integer[] ids, String[] names,
-                                      Double normalPriceS, Double normalPriceE,
-                                      Double memberPriceS, Double memberPriceE,
-                                      Timestamp productPDateS, Timestamp productPDateE,
-                                      Integer[] categoryIds) {
+    //将查询的语句拼装封装为一个方法,填进查询条件,返回查询语句
+    public String getFindProductsSql(ProductSearch productSearchCondition, Integer pageNum, Integer pageSize) {
         //根据传进的值进行sql拼装
         String sql = "select * from product where 1=0";
+        Integer[] ids = productSearchCondition.getIds();
+        String[] names = productSearchCondition.getNames();
+        Double normalPriceS = productSearchCondition.getNormalPriceS();
+        Double normalPriceE = productSearchCondition.getNormalPriceE();
+        Double memberPriceS = productSearchCondition.getMemberPriceS();
+        Double memberPriceE = productSearchCondition.getMemberPriceE();
+        Integer[] categoryIds =  productSearchCondition.getIds();
+        Timestamp productPDateS = productSearchCondition.getProductPDateS();
+        Timestamp productPDateE = productSearchCondition.getProductPDateE();
         if(null != ids){
             String strid = "";
             for(int i = 0; i < ids.length; i++) {
@@ -289,16 +298,23 @@ public class ProductDaoImpl implements ProductDao {
             String categoryIdStr = "";
             for(int i = 0; i < categoryIds.length; i++) {
                 if (i == 0) {
-                    categoryIdStr = categoryIds[i].toString();
+                    categoryIdStr = "" +  categoryIds[0];
                 } else {
-                    categoryIdStr += ", " + categoryIds[i].toString();
+                    categoryIdStr += ", " + categoryIds[i];
                 }
             }
             sql += " and categoryid in(" + categoryIdStr + ")";
             sql = sql.replace("1=0", "1=1");
         }
-        //连接数据库查询结果
+        sql += " limit " + pageNum * pageSize + "," + pageSize;
+        return sql;
+    }
 
+    public List<Product> findProducts(ProductSearch productSearchCondition,
+                                      Integer pageNum, Integer pageSize, Integer[] pageCount) {
+
+        //连接数据库查询结果
+        String sql = getFindProductsSql(productSearchCondition, pageNum, pageSize);
         Connection conn = DBConnectors.getConnetion();
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -318,6 +334,25 @@ public class ProductDaoImpl implements ProductDao {
                         category);
                 products.add(product);
             }
+            //查询总页数
+            DBConnectors.close(null, pst, rs);
+            pst = null;
+            rs = null;
+            String regex_1 = "\\blimit\\b\\s+\\d+,\\d*";
+            Pattern pattern_1 = Pattern.compile(regex_1);
+            Matcher matcher_1 = pattern_1.matcher(sql);
+            sql = matcher_1.replaceAll("");
+            String regex_2 = "\\*";
+            Pattern pattern_2 = Pattern.compile(regex_2);
+            Matcher matcher_2 = pattern_2.matcher(sql);
+            sql = matcher_2.replaceAll("count(*)");
+//            System.out.println(sql);
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            rs.next();
+            Integer productCount = rs.getInt(1);
+
+            pageCount[0] = (productCount + pageSize - 1) / pageSize;
 
         } catch (SQLException e) {
             e.printStackTrace();

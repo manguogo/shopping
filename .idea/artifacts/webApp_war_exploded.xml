@@ -20,6 +20,9 @@
             <element id="module-output" name="webCommon" />
           </element>
           <element id="library" level="project" name="Maven: mysql:mysql-connector-java:6.0.2" />
+          <element id="archive" name="webTransationData-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="webTransationData" />
+          </element>
         </element>
       </element>
       <element id="directory" name="META-INF">

@@ -40,6 +40,11 @@
             <version>5.1.0</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.zgbs</groupId>
+            <artifactId>webTransationData</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
 
     </dependencies>
 

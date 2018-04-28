@@ -9,6 +9,7 @@
 <%@ page import="service.impl.ProductServiceImpl" %>
 <%@ page import="util.Common" %>
 <%@ page import="java.sql.Timestamp" %>
+<%@ page import="productSearchTD.ProductSearch" %>
 
 
 <html>
@@ -21,8 +22,28 @@
         List<Product> products = null;
         List<Category> categoryList = cs.getCategories();
 
+        //分页代码-1开始
+        ProductService ps = ProductServiceImpl.getProductService();
+        Integer pageSize = 5;
+        Integer pageNum  = 1;
+        Integer[] pageCount = new Integer[1];
+        String requestPage = request.getParameter("page");
+        if (requestPage == null || requestPage.equals("")) {
+            pageNum = 1;
+        }
+        if (requestPage != null && !requestPage.equals("")) {
+            pageNum = Integer.parseInt(request.getParameter("page"));
+            if(pageNum < 1){
+                pageNum = 1;
+            }
+            if (pageNum > pageCount[0]){
+                pageNum = pageCount[0];
+            }
+        }
+        //分页代码-1结束
+
         if(null != datafrom && datafrom.equals("productSearch")){
-            ProductService ps = ProductServiceImpl.getProductService();
+            //处理客户端发出的请求
             String strid = request.getParameter("id");
             String strName = request.getParameter("name");
             String strNormalPriceS = request.getParameter("normalPriceS");
@@ -31,7 +52,12 @@
             String strMemberPriceE = request.getParameter("memberPriceE");
             String strProductPDateS = request.getParameter("productPDateS");
             String strProductPDateE = request.getParameter("productPDateE");
-            String[] strCategoryIds = request.getParameterValues("categoryId");
+            //jsp接收checkbox使用getParameterValues()方法
+            String[] strCategoryIds = request.getParameterValues("category");
+            ProductSearch productSearchCondition = null;
+
+            System.out.println("category:" + request.getParameter("category"));
+
 
             Integer[] ids = null;
             String[] names = null;
@@ -41,7 +67,7 @@
             Double memberPriceE = null;
             Timestamp productPDateS = null;
             Timestamp productPDateE = null;
-            Integer[] categoryIds = null;
+            Integer[] category = null;
 
             if (strid != null && !strid.equals("")) {
                 String[] idArray = strid.split(" +");
@@ -52,7 +78,6 @@
                     } catch (Exception e) {
                         response.sendRedirect("productSearch.jsp");
                     }
-                    System.out.println(ids[i]);
                 }
             }
             if (null != strName && !strName.equals("")) {
@@ -74,20 +99,21 @@
                 productPDateS = Common.stringToTimestamp(strProductPDateS);
             }
             if (null != strProductPDateE && !strProductPDateE.equals("")) {
-//                System.out.println(strProductPDateE);
                 productPDateE = Common.stringToTimestamp(strProductPDateE);
             }
             if (null != strCategoryIds) {
-                categoryIds = new Integer[strCategoryIds.length];
+                category = new Integer[strCategoryIds.length];
                 for (int i = 0; i < strCategoryIds.length; i++) {
-                    categoryIds[i] = Integer.parseInt(strCategoryIds[i]);
+                    category[i] = Integer.parseInt(strCategoryIds[i]);
                 }
             }
-            products = ps.searchProducts( ids, names,
+
+            productSearchCondition  = new ProductSearch(ids, names,
                     normalPriceS, normalPriceE,
                     memberPriceS, memberPriceE,
                     productPDateS, productPDateE,
-                    categoryIds);
+                    category);
+            products = ps.searchProducts(productSearchCondition,  pageNum,pageSize, pageCount);
 
         }
 
@@ -117,16 +143,36 @@
     <div class="form_boxA">
         <h2>产品搜索结果</h2>
         <table cellpadding="0" cellspacing="0">
+            <thead>
+                <tr>
+
+                    <th>产品ID</th>
+                    <th>产品名称</th>
+                    <th>产品市场价</th>
+                    <th>产品会员价</th>
+                    <th>产品类别</th>
+                    <th>产品描述</th>
+                    <th>产品上架时间</th>
+                </tr>
+            </thead>
+            <tfoot>
             <tr>
 
-                <th>产品ID</th>
-                <th>产品名称</th>
-                <th>产品市场价</th>
-                <th>产品会员价</th>
-                <th>产品类别</th>
-                <th>产品描述</th>
-                <th>产品上架时间</th>
+                <td colspan="7">
+                    <span>第<%=pageNum%>页</span>&emsp;
+                    <a href="productList.jsp?page=1">首页</a>&emsp;
+                    <a href="productList.jsp?page=<%=pageNum - 1 %>">上一页</a>&emsp;
+                    <a href="productList.jsp?page=<%=pageNum + 1 %>">下一页</a>&emsp;
+                    <a href="productList.jsp?page=<%=pageCount%>">尾页</a>&emsp;&emsp;
+                    <span>共<%=pageCount[0]%>页</span>&emsp;
+                    <span>
+                            <button type="button" onclick="jump()">跳转</button>
+                            至&nbsp;<input type="text" name="page" id="page">
+                        </span>&emsp;
+                </td>
+
             </tr>
+            </tfoot>
 
             <%
                 Product product = null;

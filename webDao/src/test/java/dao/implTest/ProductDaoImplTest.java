@@ -6,6 +6,7 @@ import entity.Category;
 import entity.Product;
 import org.junit.Assert;
 import org.junit.Test;
+import productSearchTD.ProductSearch;
 
 import java.sql.Timestamp;
 import java.util.Iterator;
@@ -75,20 +76,23 @@ public class ProductDaoImplTest {
     }
 
     @Test
-    public void findProducts(){
-        Integer[] ids = {1, 2};
-        String[] names = {"葡萄" };
+    public void findProductsTest(){
         ProductDao pd = ProductDaoImpl.getProductDao();
-        Integer[] categoryIds = {2, 12};
+        /*Integer[] ids = {1, 2};
+        String[] names = {"葡萄" };
+        Integer[] categoryIds = {2, 12};*/
         List<Product> products = null;
-        products = pd.findProducts(ids, null,
+        Integer[] pageCount = new Integer[1] ;
+        ProductSearch productSearchCondition = new ProductSearch(null, null,
                 null, null,
                 null, null,
-                new Timestamp(Long.parseLong("00000000000000")), null,
-                null);
+                null, null,
+                null );
+        products = pd.findProducts(productSearchCondition, 1,5, pageCount);
         for (Product p : products) {
             System.out.println(p.getName());
         }
+        System.out.println(pageCount[0]);
 
     }
     @Test

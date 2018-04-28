@@ -15,6 +15,7 @@
         <module>webService</module>
         <module>webEntity</module>
         <module>webCommon</module>
+        <module>webTransationData</module>
 
     </modules>
 

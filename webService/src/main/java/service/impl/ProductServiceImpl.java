@@ -3,6 +3,7 @@ package service.impl;
 import dao.ProductDao;
 import dao.impl.ProductDaoImpl;
 import entity.Product;
+import productSearchTD.ProductSearch;
 import service.ProductService;
 
 import java.sql.Timestamp;
@@ -51,15 +52,7 @@ public class ProductServiceImpl implements ProductService {
         return products.get(0);
     }
 
-    public List<Product> searchProducts(Integer[] ids, String[] names,
-                                        Double normalPriceS, Double normalPriceE,
-                                        Double memberPriceS, Double memberPriceE,
-                                        Timestamp productPDateS, Timestamp productPDateE,
-                                        Integer[] categoryIds) {
-        return pd.findProducts( ids, names,
-                normalPriceS,  normalPriceE,
-                memberPriceS, memberPriceE,
-                productPDateS, productPDateE,
-                categoryIds);
+    public List<Product> searchProducts(ProductSearch productSearchCondition, Integer pageNum, Integer pageSize, Integer[] pageCount) {
+        return pd.findProducts( productSearchCondition, pageNum, pageSize, pageCount);
     }
 }

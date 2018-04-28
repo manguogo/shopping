@@ -14,6 +14,7 @@
         List<Category> categoryList = new ArrayList<Category>();
         Category[] parentCategories = {new Category()};
         parentCategories[0].setId(0);
+        //递归获取所有的category,放入桶子变量categoryList中
         cs.getChildCategories(parentCategories, categoryList);
 
 
@@ -151,13 +152,13 @@
                                                 if(c.getPid() != null && c.getPid() == 0){
                                     %>
                                         <div class="bbD" >
-                                            <label><input type="checkbox" name="categoryId"  value="<%=c.getId()%>"><%=c.getName()%></label>
+                                            <label><input type="checkbox" name="category"  value="<%=c.getId()%>"><%=c.getName()%></label>
                                         </div>
                                     <%
                                                 }else {
                                     %>
                                         <span class="categorySearch" >
-                                                <label><input type="checkbox" name="categoryId"  value="<%=c.getId()%>"><%=c.getName()%></label>
+                                                <label><input type="checkbox" name="category"  value="<%=c.getId() %>"><%=c.getName()%></label>
                                         </span>
                                     <%
                                                 }

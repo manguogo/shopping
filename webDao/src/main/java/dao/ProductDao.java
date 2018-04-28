@@ -1,6 +1,7 @@
 package dao;
 
 import entity.Product;
+import productSearchTD.ProductSearch;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -17,11 +18,10 @@ public interface ProductDao {
 
     public List<Product> getProducts(Boolean isAllProducts, Product product, Integer pageSize, Integer pageNum);
 
-    public List<Product> findProducts(Integer[] ids, String[] names,
-                                      Double normalPriceS, Double normalPriceE,
-                                      Double memberPriceS, Double memberPriceE,
-                                      Timestamp productPDateS, Timestamp productPDateE,
-                                      Integer[] categoryIds);
-
     public Integer getProductPageCount(Integer pageSize);
+
+    public String getFindProductsSql(ProductSearch productSearchCondition, Integer pageNum, Integer pageSize);
+
+    public List<Product> findProducts(ProductSearch productSearchCondition, Integer pageNum, Integer pageSize, Integer[] pageCount);
+
 }

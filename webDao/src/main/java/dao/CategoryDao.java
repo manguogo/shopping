@@ -25,6 +25,6 @@ public interface CategoryDao {
     public List<Category> findChildCategory(Category c);
 
     //通过父类别寻找所有子类别
-    public List<Category> findChileCategoriesByParent(Category parentCategory);
+    public List<Category> findChildCategoriesByParent(Category parentCategory);
 
 }

@@ -254,7 +254,7 @@ public class CategoryDaoImpl implements CategoryDao {
 
     }
 
-    public List<Category> findChileCategoriesByParent(Category parentCategory) {
+    public List<Category> findChildCategoriesByParent(Category parentCategory) {
         String sql = "select * from category where pid = " + parentCategory.getId();
         Connection conn = DBConnectors.getConnetion();
         PreparedStatement pst = null;

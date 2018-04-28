@@ -24,8 +24,6 @@ public class CategoryServiceImpl implements CategoryService {
         return cd.getAllCategories(true, null);
     }
 
-
-
     public void addCategory(Category c) {
         CategoryDao cd = CategoryDaoImpl.getCategoryDao();
         cd.insertCategory(c);
@@ -62,7 +60,7 @@ public class CategoryServiceImpl implements CategoryService {
         List<Category> findedCategories = null;
 
         for(int i = 0; i < parentCcategories.length; i++) {
-            findedCategories = cd.findChileCategoriesByParent(parentCcategories[i]);
+            findedCategories = cd.findChildCategoriesByParent(parentCcategories[i]);
             for(int j = 0; j < findedCategories.size(); j++) {
                 backCategories.add(findedCategories.get(j));
                 if (findedCategories.get(j).getIsleaf() == 0) {
