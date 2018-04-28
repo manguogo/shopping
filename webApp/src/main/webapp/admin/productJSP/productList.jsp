@@ -18,7 +18,11 @@
         Integer pageSize = 5;
         Integer pageNum  = 1;
         Integer pageCount = ps.getPageCount(pageSize);
-        if (request.getParameter("page") != null) {
+        String requestPage = request.getParameter("page");
+        if (requestPage == null || requestPage.equals("")) {
+            pageNum = 1;
+        }
+        if (requestPage != null && !requestPage.equals("")) {
             pageNum = Integer.parseInt(request.getParameter("page"));
             if(pageNum < 1){
                 pageNum = 1;
@@ -36,6 +40,7 @@
     <link href="../css/print.css" rel="stylesheet" type="text/css"  media="print" />
     <script src="../js/jquery-1.10.1.min.js"></script>
     <script src="../js/side.js" type="text/javascript"></script>
+    <script src="../js/productSearch.js"></script>
 
     <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -68,10 +73,17 @@
             <tfoot>
                 <tr>
 
-                    <td colspan="7"><a href="productList.jsp?page=1">首页</a>&emsp;
+                    <td colspan="7">
+                        <span>第<%=pageNum%>页</span>&emsp;
+                        <a href="productList.jsp?page=1">首页</a>&emsp;
                         <a href="productList.jsp?page=<%=pageNum - 1 %>">上一页</a>&emsp;
                         <a href="productList.jsp?page=<%=pageNum + 1 %>">下一页</a>&emsp;
-                        <a href="productList.jsp?page=<%=pageCount%>">尾页</a>&emsp;
+                        <a href="productList.jsp?page=<%=pageCount%>">尾页</a>&emsp;&emsp;
+                        <span>共<%=pageCount%>页</span>&emsp;
+                        <span>
+                            <button type="button" onclick="jump()">跳转</button>
+                            至&nbsp;<input type="text" name="page" id="page">
+                        </span>&emsp;
                     </td>
 
                 </tr>

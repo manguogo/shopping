@@ -66,7 +66,10 @@ function check() {
     return true;
 }
 
-
+function jump() {
+    var pageNum = document.getElementById("page").value;
+    window.location.href = "productList.jsp?page=" + pageNum;
+}
 
 
 
