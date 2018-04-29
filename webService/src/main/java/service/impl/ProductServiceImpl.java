@@ -52,7 +52,7 @@ public class ProductServiceImpl implements ProductService {
         return products.get(0);
     }
 
-    public List<Product> searchProducts(ProductSearch productSearchCondition, Integer pageNum, Integer pageSize, Integer[] pageCount) {
-        return pd.findProducts( productSearchCondition, pageNum, pageSize, pageCount);
+    public List<Product> searchProducts(ProductSearch productSearchCondition, Integer pageNum, Integer pageSize) {
+        return pd.findProducts( productSearchCondition, pageNum, pageSize);
     }
 }

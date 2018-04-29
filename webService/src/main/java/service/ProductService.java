@@ -20,6 +20,6 @@ public interface ProductService {
     public List<Product> getAllProducts(Integer pageSize, Integer pageNum);
 
     //需要传入pageCount,对其进行程序内的赋值
-    public List<Product> searchProducts(ProductSearch productSearchCondition, Integer pageNum, Integer pageSize, Integer[] pageCount);
+    public List<Product> searchProducts(ProductSearch productSearchCondition, Integer pageNum, Integer pageSize);
     public Integer getPageCount(Integer pageSize);
 }

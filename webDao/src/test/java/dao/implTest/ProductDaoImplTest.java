@@ -79,20 +79,19 @@ public class ProductDaoImplTest {
     public void findProductsTest(){
         ProductDao pd = ProductDaoImpl.getProductDao();
         /*Integer[] ids = {1, 2};
-        String[] names = {"葡萄" };
-        Integer[] categoryIds = {2, 12};*/
+        String[] names = {"葡萄" };*/
+        Integer[] categoryIds = {2, 12};
         List<Product> products = null;
-        Integer[] pageCount = new Integer[1] ;
         ProductSearch productSearchCondition = new ProductSearch(null, null,
                 null, null,
                 null, null,
                 null, null,
-                null );
-        products = pd.findProducts(productSearchCondition, 1,5, pageCount);
+                categoryIds );
+        products = pd.findProducts(productSearchCondition, 1,5);
         for (Product p : products) {
             System.out.println(p.getName());
         }
-        System.out.println(pageCount[0]);
+        System.out.println(products.size());
 
     }
     @Test

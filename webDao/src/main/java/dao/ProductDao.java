@@ -22,6 +22,6 @@ public interface ProductDao {
 
     public String getFindProductsSql(ProductSearch productSearchCondition, Integer pageNum, Integer pageSize);
 
-    public List<Product> findProducts(ProductSearch productSearchCondition, Integer pageNum, Integer pageSize, Integer[] pageCount);
+    public List<Product> findProducts(ProductSearch productSearchCondition, Integer pageNum, Integer pageSize);
 
 }

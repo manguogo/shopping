@@ -3,6 +3,7 @@ package entity;
 import java.sql.Timestamp;
 
 public class Product {
+    public static Integer pageCount = 0;
     private  Integer id;
     private String  name;
     private String desc;

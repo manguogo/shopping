@@ -202,7 +202,7 @@ public class ProductDaoImpl implements ProductDao {
         Double normalPriceE = productSearchCondition.getNormalPriceE();
         Double memberPriceS = productSearchCondition.getMemberPriceS();
         Double memberPriceE = productSearchCondition.getMemberPriceE();
-        Integer[] categoryIds =  productSearchCondition.getIds();
+        Integer[] categoryIds =  productSearchCondition.getCategoryIds();
         Timestamp productPDateS = productSearchCondition.getProductPDateS();
         Timestamp productPDateE = productSearchCondition.getProductPDateE();
         if(null != ids){
@@ -306,12 +306,13 @@ public class ProductDaoImpl implements ProductDao {
             sql += " and categoryid in(" + categoryIdStr + ")";
             sql = sql.replace("1=0", "1=1");
         }
-        sql += " limit " + pageNum * pageSize + "," + pageSize;
+        sql += " limit " + (pageNum - 1) * pageSize + "," + pageSize;
+//        System.out.println(sql);
         return sql;
     }
 
     public List<Product> findProducts(ProductSearch productSearchCondition,
-                                      Integer pageNum, Integer pageSize, Integer[] pageCount) {
+                                      Integer pageNum, Integer pageSize) {
 
         //连接数据库查询结果
         String sql = getFindProductsSql(productSearchCondition, pageNum, pageSize);
@@ -334,25 +335,33 @@ public class ProductDaoImpl implements ProductDao {
                         category);
                 products.add(product);
             }
-            //查询总页数
-            DBConnectors.close(null, pst, rs);
-            pst = null;
-            rs = null;
-            String regex_1 = "\\blimit\\b\\s+\\d+,\\d*";
-            Pattern pattern_1 = Pattern.compile(regex_1);
-            Matcher matcher_1 = pattern_1.matcher(sql);
-            sql = matcher_1.replaceAll("");
-            String regex_2 = "\\*";
-            Pattern pattern_2 = Pattern.compile(regex_2);
-            Matcher matcher_2 = pattern_2.matcher(sql);
-            sql = matcher_2.replaceAll("count(*)");
-//            System.out.println(sql);
-            pst = conn.prepareStatement(sql);
-            rs = pst.executeQuery();
-            rs.next();
-            Integer productCount = rs.getInt(1);
 
-            pageCount[0] = (productCount + pageSize - 1) / pageSize;
+            /*
+              当查询的页数小于已经查出来的页数时不再每次分页查询时再查一遍总页数,即查询总页数只查询一次
+              当查询到最大页数的时候再查询一边总页数,即数据有了增加时会更新一次总页数值
+
+
+            if(pageNum >= Product.pageCount) {
+              查询总页数*/
+                DBConnectors.close(null, pst, rs);
+                pst = null;
+                rs = null;
+                String regex_1 = "\\blimit\\b\\s+\\d+,\\d*";
+                Pattern pattern_1 = Pattern.compile(regex_1);
+                Matcher matcher_1 = pattern_1.matcher(sql);
+                sql = matcher_1.replaceAll("");
+                String regex_2 = "\\*";
+                Pattern pattern_2 = Pattern.compile(regex_2);
+                Matcher matcher_2 = pattern_2.matcher(sql);
+                sql = matcher_2.replaceAll("count(*)");
+//            System.out.println(sql);
+                pst = conn.prepareStatement(sql);
+                rs = pst.executeQuery();
+                rs.next();
+                Integer productCount = rs.getInt(1);
+
+                Product.pageCount = (productCount + pageSize - 1) / pageSize;
+//            }
 
         } catch (SQLException e) {
             e.printStackTrace();

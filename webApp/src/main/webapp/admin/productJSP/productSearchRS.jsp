@@ -17,6 +17,7 @@
 
     <%
         request.setCharacterEncoding("UTF-8");
+        //验证提交数据来源
         String datafrom = request.getParameter("producthides");
         CategoryService cs = CategoryServiceImpl.getCategoryService();
         List<Product> products = null;
@@ -26,7 +27,8 @@
         ProductService ps = ProductServiceImpl.getProductService();
         Integer pageSize = 5;
         Integer pageNum  = 1;
-        Integer[] pageCount = new Integer[1];
+        //传递查询参数
+        String parameters = "";
         String requestPage = request.getParameter("page");
         if (requestPage == null || requestPage.equals("")) {
             pageNum = 1;
@@ -36,8 +38,8 @@
             if(pageNum < 1){
                 pageNum = 1;
             }
-            if (pageNum > pageCount[0]){
-                pageNum = pageCount[0];
+            if (pageNum > Product.pageCount){
+                pageNum = Product.pageCount;
             }
         }
         //分页代码-1结束
@@ -56,8 +58,8 @@
             String[] strCategoryIds = request.getParameterValues("category");
             ProductSearch productSearchCondition = null;
 
-            System.out.println("category:" + request.getParameter("category"));
-
+            //当页面提交到自身时给予一个身份标识
+            parameters += "producthides=productSearch";
 
             Integer[] ids = null;
             String[] names = null;
@@ -78,42 +80,54 @@
                     } catch (Exception e) {
                         response.sendRedirect("productSearch.jsp");
                     }
+
+                    parameters += "&id=" + ids[i];
+
                 }
             }
             if (null != strName && !strName.equals("")) {
                 names = strName.split(" +");
+                parameters += "&name=" + strName;
+
             }
             if (null != strNormalPriceS && !strNormalPriceS.equals("")) {
                 normalPriceS = Double.parseDouble(strNormalPriceS);
+                parameters += "&normalPriceS=" + normalPriceS;
             }
             if (null != strNormalPriceE && !strNormalPriceE.equals("")) {
                 normalPriceE = Double.parseDouble(strNormalPriceE);
+                parameters += "&normalPriceE=" + normalPriceE;
             }
             if (null != strMemberPriceS && !strMemberPriceS.equals("")) {
                 memberPriceS = Double.parseDouble(strMemberPriceS);
+                parameters += "&memberPriceS=" + memberPriceS;
             }
             if (null != strMemberPriceE && !strMemberPriceE.equals("")) {
                 memberPriceE = Double.parseDouble(strMemberPriceE);
+                parameters += "&memberPriceE=" + memberPriceE;
             }
             if (null != strProductPDateS && !strProductPDateS.equals("")) {
                 productPDateS = Common.stringToTimestamp(strProductPDateS);
+                parameters += "&productPDateS=" + strProductPDateS;
             }
             if (null != strProductPDateE && !strProductPDateE.equals("")) {
                 productPDateE = Common.stringToTimestamp(strProductPDateE);
+                parameters += "&productPDateE=" + strProductPDateE;
             }
             if (null != strCategoryIds) {
                 category = new Integer[strCategoryIds.length];
                 for (int i = 0; i < strCategoryIds.length; i++) {
                     category[i] = Integer.parseInt(strCategoryIds[i]);
+                    parameters += "&category=" + category[i];
                 }
             }
-
+            //封装查询条件
             productSearchCondition  = new ProductSearch(ids, names,
                     normalPriceS, normalPriceE,
                     memberPriceS, memberPriceE,
                     productPDateS, productPDateE,
                     category);
-            products = ps.searchProducts(productSearchCondition,  pageNum,pageSize, pageCount);
+            products = ps.searchProducts(productSearchCondition,  pageNum, pageSize);
 
         }
 
@@ -160,11 +174,11 @@
 
                 <td colspan="7">
                     <span>第<%=pageNum%>页</span>&emsp;
-                    <a href="productList.jsp?page=1">首页</a>&emsp;
-                    <a href="productList.jsp?page=<%=pageNum - 1 %>">上一页</a>&emsp;
-                    <a href="productList.jsp?page=<%=pageNum + 1 %>">下一页</a>&emsp;
-                    <a href="productList.jsp?page=<%=pageCount%>">尾页</a>&emsp;&emsp;
-                    <span>共<%=pageCount[0]%>页</span>&emsp;
+                    <a href="productSearchRS.jsp?page=1&<%=parameters%>">首页</a>&emsp;
+                    <a href="productSearchRS.jsp?page=<%=pageNum - 1 %>&<%=parameters%>">上一页</a>&emsp;
+                    <a href="productSearchRS.jsp?page=<%=pageNum + 1 %>&<%=parameters%>">下一页</a>&emsp;
+                    <a href="productSearchRS.jsp?page=<%=Product.pageCount%>&<%=parameters%>">尾页</a>&emsp;&emsp;
+                    <span>共<%=Product.pageCount%>页</span>&emsp;
                     <span>
                             <button type="button" onclick="jump()">跳转</button>
                             至&nbsp;<input type="text" name="page" id="page">
