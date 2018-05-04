@@ -295,12 +295,44 @@ public class ProductDaoImpl implements ProductDao {
         }
         //根据传入的categoryid拼装sql语句
         if (null != categoryIds) {
+            //根据传入的category查看此id下的所有子id
+            Connection conn = DBConnectors.getConnetion();
+            PreparedStatement pst = null;
+            ResultSet rs = null;
+            List<Category> categoryList = new ArrayList<Category>();
+            Category c = new Category();
+            String categorySql = "";
+
+            for (Integer categoryIdTmp : categoryIds) {
+                categorySql  = "select * from category where id = " + categoryIdTmp;
+                try {
+                    pst = conn.prepareStatement(categorySql);
+                    rs = pst.executeQuery();
+                    rs.next();
+                    c.setId(rs.getInt("id"));
+                    c.setName(rs.getString("name"));
+                    c.setPid(rs.getInt("pid"));
+                    c.setIsleaf(rs.getInt("isleaf"));
+
+                    categoryList.add(c);
+                    if (c.getIsleaf() == 0) {
+                        getCategories(conn, c, categoryList);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+            DBConnectors.close(conn, pst, rs);
+
+            //根据得到的category拼装ID查询语句
             String categoryIdStr = "";
-            for(int i = 0; i < categoryIds.length; i++) {
+            for(int i = 0; i < categoryList.size(); i++) {
                 if (i == 0) {
-                    categoryIdStr = "" +  categoryIds[0];
+                    categoryIdStr = "" +  categoryList.get(i).getId();
                 } else {
-                    categoryIdStr += ", " + categoryIds[i];
+                    categoryIdStr += ", " + categoryList.get(i).getId();
                 }
             }
             sql += " and categoryid in(" + categoryIdStr + ")";
@@ -394,6 +426,38 @@ public class ProductDaoImpl implements ProductDao {
             DBConnectors.close(conn, pst, rs);
         }
         return pageCount;
+    }
+
+    //利用递归搜索所有的子category
+    public void getCategories(Connection conn, Category category, List<Category> categories){
+        if (category.getIsleaf() != 0) {
+            return;
+        }
+        String sql = "select * from category where pid = " + category.getId();
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+
+        try {
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            while (rs.next()) {
+                Category c = new Category();
+                c.setId(rs.getInt("id"));
+                c.setName(rs.getString("name"));
+                c.setPid(rs.getInt("pid"));
+                c.setIsleaf(rs.getInt("isleaf"));
+                categories.add(c);
+                if (rs.getInt("isleaf") != 0) {
+                    getCategories(conn, c, categories);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            DBConnectors.close(null, pst, rs);
+        }
+
+
     }
 
 }

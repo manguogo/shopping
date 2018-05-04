@@ -1,5 +1,6 @@
 package dao.implTest;
 
+import common.DBConnectors;
 import dao.ProductDao;
 import dao.impl.ProductDaoImpl;
 import entity.Category;
@@ -8,7 +9,9 @@ import org.junit.Assert;
 import org.junit.Test;
 import productSearchTD.ProductSearch;
 
+import java.sql.Connection;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -109,6 +112,36 @@ public class ProductDaoImplTest {
         Integer pageCount = null;
         pageCount = pd.getProductPageCount(5);
         System.out.println(pageCount);
+
+    }
+
+    @Test
+    public void getCategoriesTest(){
+        ProductDao pd = ProductDaoImpl.getProductDao();
+        List<Category> categoryList = new ArrayList<Category>();
+        Category c = new Category();
+        c.setId(5);
+        c.setPid(0);
+        c.setIsleaf(0);
+        Connection conn = DBConnectors.getConnetion();
+        pd.getCategories(conn, c, categoryList);
+
+        for (Category category : categoryList) {
+            System.out.println(category.getName());
+        }
+
+
+    }
+
+    @Test
+    public void getFindProductsSql(){
+        ProductDao pd = ProductDaoImpl.getProductDao();
+        ProductSearch productSearch = new ProductSearch();
+        Integer[] ids = {Integer.valueOf(5), Integer.valueOf(10), Integer.valueOf(12), Integer.valueOf(18)};
+        productSearch.setCategoryIds(ids);
+
+        String sql = pd.getFindProductsSql(productSearch, 0, 5);
+        System.out.println(sql);
 
     }
 

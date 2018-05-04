@@ -2,6 +2,7 @@ package dao;
 
 import entity.Category;
 
+import java.sql.Connection;
 import java.util.List;
 
 public interface CategoryDao {
@@ -26,5 +27,7 @@ public interface CategoryDao {
 
     //通过父类别寻找所有子类别
     public List<Category> findChildCategoriesByParent(Category parentCategory);
+
+
 
 }
