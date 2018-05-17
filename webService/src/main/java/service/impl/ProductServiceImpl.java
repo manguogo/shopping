@@ -44,6 +44,10 @@ public class ProductServiceImpl implements ProductService {
         return  pd.getProductPageCount(pageSize);
     }
 
+    public List<Product> getLatestProducts(Integer i) {
+        return pd.getLatestProducts(i);
+    }
+
     public Product getAProduct(Integer id) {
         Product p = new Product();
         List<Product> products = null;

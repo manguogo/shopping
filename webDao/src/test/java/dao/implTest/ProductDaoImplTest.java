@@ -83,14 +83,14 @@ public class ProductDaoImplTest {
         ProductDao pd = ProductDaoImpl.getProductDao();
         /*Integer[] ids = {1, 2};
         String[] names = {"葡萄" };*/
-        Integer[] categoryIds = {2, 12};
+        Integer[] categoryIds = {5};
         List<Product> products = null;
         ProductSearch productSearchCondition = new ProductSearch(null, null,
                 null, null,
                 null, null,
                 null, null,
                 categoryIds );
-        products = pd.findProducts(productSearchCondition, 1,5);
+        products = pd.findProducts(productSearchCondition, 0,5);
         for (Product p : products) {
             System.out.println(p.getName());
         }
@@ -142,6 +142,17 @@ public class ProductDaoImplTest {
 
         String sql = pd.getFindProductsSql(productSearch, 0, 5);
         System.out.println(sql);
+
+    }
+
+    @Test
+    public void getLatestProductsTest() {
+        ProductDao pd = ProductDaoImpl.getProductDao();
+        List<Product> products;
+        products = pd.getLatestProducts(5);
+        for (Product p : products) {
+            System.out.println(p.getName());
+        }
 
     }
 

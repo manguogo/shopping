@@ -1,15 +1,31 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="service.ProductService" %>
+<%@ page import="service.impl.ProductServiceImpl" %>
+<%@ page import="entity.Product" %>
+<%@ page import="entity.SalesItem" %>
 <!DOCTYPE html >
 <html >
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>本亲生活网</title>
 <meta name="keywords" content="" />
 <meta name="description" content="" />
+
+  <%
+    Integer id = Integer.parseInt(request.getParameter("id"));
+    ProductService ps = ProductServiceImpl.getProductService();
+    Product product = null;
+
+    product = ps.getAProduct(id);
+
+
+
+  %>
 </head>
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/index.js"></script>
 <script src="script/global.js" type="text/javascript"></script>
 <script src="script/head.js" type="text/javascript"></script>
+<script src="script/product.js"></script>
 
 <link href="css/css.css" type="text/css" rel="stylesheet">	
 <link rel="stylesheet" type="text/css" href="css/main.css"/>
@@ -25,18 +41,18 @@
 <div class="top">
 
 <div class="top1">
-<div class="top1_main"><span class="dl">您好，欢迎光临本亲生活网！<a href="denglu.html"> [请登录]</a>  <a href="zhuce.html">[免费注册]</a></span><span class="yh_zx"><a href="hyzx.html">用户中心</a>  |  <a href="#">我的订单</a>  |  <a href="#">帮助中心</a>  |  <a href="#">联系方式</a></span></div>
+<div class="top1_main"><span class="dl">您好，欢迎光临本亲生活网！<a href="denglu.jsp"> [请登录]</a>  <a href="zhuce.html">[免费注册]</a></span><span class="yh_zx"><a href="hyzx.html">用户中心</a>  |  <a href="#">我的订单</a>  |  <a href="#">帮助中心</a>  |  <a href="#">联系方式</a></span></div>
 </div>
 
 
 <div class="top_logo">
 
-<div class="logo"><a href="index.html"><img src="images/logo.jpg" width="338" height="113"  alt="本亲生活的logo标志"/></a></div>
+<div class="logo"><a href="index.jsp"><img src="images/logo.jpg" width="338" height="113" alt="本亲生活的logo标志"/></a></div>
 <div class="top_you">
 
-<div class="ss_1"><input name="key" type="text" id="key" value="请输入您要搜索的产品" size="30"      
-          onclick="if(value==defaultValue){value='';this.style.color='#898b8c'}"    
-          onBlur="if(!value){value=defaultValue;this.style.color='#999'}" style="color:#999; line-height:26px;"  class="ssk1"/><input name="" value="搜 索" type="button"  class="button1"/></div>
+<div class="ss_1"><input name="key" type="text" id="key" value="请输入您要搜索的产品" size="30"
+                         onclick="if(value==defaultValue){value='';this.style.color='#898b8c'}"
+                         onBlur="if(!value){value=defaultValue;this.style.color='#992b36'}" style="color:#999; line-height:26px;" class="ssk1"/><input name="" value="搜 索" type="button" class="button1"/></div>
 
 </div>
 
@@ -226,9 +242,9 @@
     </div>
     <div class="navCon-menu fl">
       <ul>
-        <li><a class="curMenu" href="index.html">商城首页</a></li>
-        <li><a href="tplist.html">特色产品</a></li>
-        <li><a href="tplist.html">VIP专区</a></li>
+        <li><a class="curMenu" href="index.jsp">商城首页</a></li>
+        <li><a href="productList.jsp">特色产品</a></li>
+        <li><a href="productList.jsp">VIP专区</a></li>
         <li><a href="#">服务支持</a></li>
         <li><a href="newslist.html">相关资讯</a></li>
         <li><a href="about.html">关于本亲</a></li>
@@ -272,7 +288,7 @@
 
 <div class="con_ny">
 
-<div class="con_dqwz">您的当前位置：<a href="index.html">首页</a> >> 特色产品</div>
+<div class="con_dqwz">您的当前位置：<a href="index.jsp">首页</a> >> 特色产品</div>
 
 <!--产品购买详情介绍开始-->
 
@@ -280,6 +296,7 @@
 
 
 <!--相册放大镜开始-->
+  <%--重要修改的地方--%>
 <div class="fdj">
 
 <SCRIPT src="js/jquery-1.2.6.pack.js" type=text/javascript></SCRIPT>
@@ -356,22 +373,27 @@
 <!--相册放大镜结束-->
 
 <div class="xjmc_jjsm">
-<div class="cpxq_mc_1">樱桃爷爷 综合凤梨酥 台湾特产500g 原味、桂圆和核桃</div>
+<div class="cpxq_mc_1"><%=product.getName()%></div>
 <div class="none" style="height:15px;"></div>
-<div class="zzl">总 重 量：500g</div>
-<div class="zzl">售     价：<span style="color:#C00; font-weight:600; font-size:18px;">￥107.80</span>  <span style="padding-left:20px;text-decoration:line-through;">市场价：￥129.36</span></div>
-<div class="zzl">发 货 地：台湾 台湾</div>
-<div class="zzl">特产属性：台湾特产</div>
+<div class="zzl">售     价：<span style="color:#C00; font-weight:600; font-size:18px;">￥<%=product.getMemberPrice()%></span>  <span style="padding-left:20px;text-decoration:line-through;">市场价：￥<%=product.getNormalPrice()%></span></div>
+<div class="zzl">发 货 地：<%=product.getDesc()%></div>
+<div class="zzl">特产属性：暂无</div>
 
-
+<%--重要修改地方--%>
 <div class="dgsc">
-<span class="gmsl">购买数量：<input name="" value="-" type="button"  style="background: url(images/jia.jpg); width:19px; height:19px;"/>
-<input type="text" value="1"  style="width:40px; text-align:center; height:18px; border:1px solid #dddddd;" />  <input name="" value="+" type="button"  style="background: url(images/jia.jpg); width:19px; height:19px;"/>
+<span class="gmsl">
+  购买数量：<input name="" value="-" type="button"  style="background: url(images/jia.jpg); width:19px; height:19px;" onclick="removeProduct()"/>
+<input id="productCount" type="text" value="1"  style="width:40px; text-align:center; height:18px; border:1px solid #dddddd;" onblur="changeHref()"/>
+  <input name="" value="+" type="button"  style="background: url(images/jia.jpg); width:19px; height:19px;" onclick="addProduct()"/>
 </span>
 
-
 <span class="jrsc_2"><a href="#"><img src="images/shoucang.jpg" width="170" height="34" /></a></span>
-<span class="jrsc_2" style="padding-left:20px;"><a href="ddtj.html"><img src="images/dinggou.jpg" width="170" height="34" /></a></span>
+  <%--购买--%>
+<span class="jrsc_2" style="padding-left:20px;">
+  <a id="buy" href="itemChange.jsp?id=<%=product.getId()%>&name=<%=product.getName()%>&memberPrice=<%=product.getMemberPrice()%>" >
+    <img src="images/dinggou.jpg" width="170" height="34" />
+  </a>
+</span>
 </div>
 
 <div class="fenx">您还可以分享到:</div>
@@ -550,21 +572,24 @@ for(i=1;i<=n;i++){
 <div class="cpjs_qh1">
 <span style="font-size:14px; color:#000; font-weight:600; display:block; padding-bottom:15px;">产品参数：</span>
 
-[厂名]：LITTORE FAMILY WINES  &nbsp;&nbsp;&nbsp;[厂址]：265Ballan Road MooraboolGeelong,Victoria,Australia&nbsp;&nbsp;&nbsp;[厂家联系方式]：61352284888&nbsp;&nbsp;&nbsp;[配料表]：100%葡萄汁[储藏方式]：低温、干燥、避光、通风&nbsp;&nbsp;&nbsp;[保质期]：3650 天&nbsp;&nbsp;&nbsp;[品牌]：salience&nbsp;&nbsp;&nbsp;[系列]：BOTANY BAY博特力湾&nbsp;&nbsp;&nbsp;[规格]：赤霞珠 美乐/梅洛&nbsp;&nbsp;&nbsp;[重量(g)]：750ml&nbsp;&nbsp;&nbsp;[产地]：澳大利亚
+<%=product.getDesc()%>
 </div>
 
 
-<div class="spjs_2"><span class="spxq_js1">商品介绍 </span><span class="xqyw">Product Ovierview</span></div>
+<div class="spjs_2">
+  <span class="spxq_js1">商品介绍 </span>
+  <span class="xqyw">Product Ovierview</span>
+</div>
 <div class="spjs_left">
-<div class="spjs_left1">樱桃爷爷 综合凤梨酥 台湾特产500g 原味、桂圆和核桃</div>
-<div class="spjs_left2"><span class="xqjq2">产品名称:</span>名庄进口 正品澳洲 红酒原装750ml梅洛赤霞珠干红葡萄酒【包邮】</div>
+<div class="spjs_left1"><%=product.getDesc()%></div>
+<div class="spjs_left2"><span class="xqjq2">产品名称:</span><%=product.getName()%></div>
 <div class="spjs_left2"><span class="xqjq2">配料表:</span>100%葡萄汁</div>
 <div class="spjs_left2"><span class="xqjq2">储藏方式:</span>低温、干燥、避光、通风</div>
 <div class="spjs_left2"><span class="xqjq2">保质期:</span>3650 天</div>
 <div class="spjs_left2"><span class="xqjq2">重量(g):</span>750ml</div>
 <div class="spjs_left2"><span class="xqjq2">产地:</span>澳大利亚</div>
 </div> 
-<div class="spjs_right"><img src="images/xq1.jpg" width="322" height="354" /></div>
+<div class="spjs_right"><img src="images/redwine.jpg" width="322" height="354" /></div>
 
 
 

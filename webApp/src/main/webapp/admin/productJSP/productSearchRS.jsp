@@ -71,6 +71,7 @@
             Timestamp productPDateE = null;
             Integer[] category = null;
 
+
             if (strid != null && !strid.equals("")) {
                 String[] idArray = strid.split(" +");
                 ids  = new Integer[idArray.length];
@@ -79,6 +80,7 @@
                         ids[i] = Integer.parseInt(idArray[i]);
                     } catch (Exception e) {
                         response.sendRedirect("productSearch.jsp");
+                        return;
                     }
 
                     parameters += "&id=" + ids[i];
@@ -91,20 +93,41 @@
 
             }
             if (null != strNormalPriceS && !strNormalPriceS.equals("")) {
-                normalPriceS = Double.parseDouble(strNormalPriceS);
-                parameters += "&normalPriceS=" + normalPriceS;
+                try {
+                    normalPriceS = Double.parseDouble(strNormalPriceS);
+                    parameters += "&normalPriceS=" + normalPriceS;
+                } catch (Exception e) {
+                    response.sendRedirect("productSearch.jsp");
+                    return;
+                }
             }
             if (null != strNormalPriceE && !strNormalPriceE.equals("")) {
-                normalPriceE = Double.parseDouble(strNormalPriceE);
-                parameters += "&normalPriceE=" + normalPriceE;
+                try {
+                    normalPriceE = Double.parseDouble(strNormalPriceE);
+                    parameters += "&normalPriceE=" + normalPriceE;
+                } catch (Exception e) {
+                    response.sendRedirect("productSearch.jsp");
+                    return;
+                }
             }
             if (null != strMemberPriceS && !strMemberPriceS.equals("")) {
-                memberPriceS = Double.parseDouble(strMemberPriceS);
-                parameters += "&memberPriceS=" + memberPriceS;
+                try {
+                    memberPriceS = Double.parseDouble(strMemberPriceS);
+                    parameters += "&memberPriceS=" + memberPriceS;
+                }catch (Exception e) {
+                    response.sendRedirect("productSearch.jsp");
+                    return;
+                }
             }
             if (null != strMemberPriceE && !strMemberPriceE.equals("")) {
-                memberPriceE = Double.parseDouble(strMemberPriceE);
-                parameters += "&memberPriceE=" + memberPriceE;
+                try {
+                    memberPriceE = Double.parseDouble(strMemberPriceE);
+                    parameters += "&memberPriceE=" + memberPriceE;
+                }catch (Exception e) {
+                    response.sendRedirect("productSearch.jsp");
+                    return;
+                }
+
             }
             if (null != strProductPDateS && !strProductPDateS.equals("")) {
                 productPDateS = Common.stringToTimestamp(strProductPDateS);

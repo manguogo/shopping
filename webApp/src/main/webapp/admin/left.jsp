@@ -106,23 +106,32 @@
 			</dl>
 
 
-
-
-
-
-
+			<%--订单管理--%>
 			<dl class="system_log">
 				<dt>
 					<img class="icon1" src="img/coin11.png" /><img class="icon2"
-						src="img/coin12.png" /> 新闻管理<img class="icon3"
+						src="img/coin12.png" /> 订单管理<img class="icon3"
 						src="img/coin19.png" /><img class="icon4"
 						src="img/coin20.png" />
 				</dt>
 				<dd>
 					<img class="coin11" src="img/coin111.png" /><img class="coin22"
-						src="img/coin222.png" /><a class="cks">新闻管理</a><img class="icon5" src="img/coin21.png" />
+						src="img/coin222.png" /><a class="cks" href="orderJSP/orderList.jsp" target="main">订单列表</a><img class="icon5" src="img/coin21.png" />
+				</dd>
+				<dd>
+					<img class="coin11" src="img/coin111.png" />
+					<img class="coin22" src="img/coin222.png" /><a class="cks" target="main">订单查询</a><img class="icon5" src="img/coin21.png" />
+				</dd>
+				<dd>
+					<img class="coin11" src="img/coin111.png" />
+					<img class="coin22" src="img/coin222.png" /><a class="cks">订单修改</a><img class="icon5" src="img/coin21.png" />
 				</dd>
 			</dl>
+
+
+
+
+
 			<dl class="system_log">
 				<dt>
 					<img class="icon1" src="img/coin14.png" /><img class="icon2"

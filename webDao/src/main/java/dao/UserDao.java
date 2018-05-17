@@ -13,4 +13,6 @@ public interface UserDao {
     public void updateUser(User user);
 
     public int deleteUser(Integer id);
+
+    public User userIsExist(User user);
 }

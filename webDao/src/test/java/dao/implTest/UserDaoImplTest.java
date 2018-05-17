@@ -65,6 +65,14 @@ public class UserDaoImplTest {
 
     }
 
+    @Test
+    public void userIsExist() {
+        UserDao ud = new UserDaoImpl();
+        User user = new User();
+        user.setUserName("tom");
+        user.setPassword("123456");
+        System.out.println(ud.userIsExist(user));
+    }
 }
 
 

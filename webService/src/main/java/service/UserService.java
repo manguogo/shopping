@@ -12,4 +12,6 @@ public interface UserService {
     public User getUser(int id);
     public void changeUser(User user);
     public void remove(Integer id);
+
+    public User userIsExist(User user);
 }

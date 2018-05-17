@@ -22,4 +22,8 @@ public interface ProductService {
     //需要传入pageCount,对其进行程序内的赋值
     public List<Product> searchProducts(ProductSearch productSearchCondition, Integer pageNum, Integer pageSize);
     public Integer getPageCount(Integer pageSize);
+
+    //查询最新商品
+    public List<Product> getLatestProducts(Integer i);
+
 }

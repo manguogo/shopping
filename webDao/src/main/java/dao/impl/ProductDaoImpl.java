@@ -78,7 +78,7 @@ public class ProductDaoImpl implements ProductDao {
             sql += " and categoryid = " + categoryId;
             sql = sql.replace("1=0", "1=1");
         }
-        System.out.println(sql);
+//        System.out.println(sql);
 
         //删除product操作
         Integer deleteCount = 0;
@@ -154,7 +154,6 @@ public class ProductDaoImpl implements ProductDao {
         }
         if(isAllProducts == false && product != null){
             id = product.getId();
-            System.out.println("isAllProducts" + isAllProducts);
             sql = "select * from product where 1=1";
             if (null != id) {
                 sql += " and id = " + id;
@@ -337,6 +336,7 @@ public class ProductDaoImpl implements ProductDao {
             }
             sql += " and categoryid in(" + categoryIdStr + ")";
             sql = sql.replace("1=0", "1=1");
+//            System.out.println(sql);
         }
         sql += " limit " + (pageNum - 1) * pageSize + "," + pageSize;
 //        System.out.println(sql);
@@ -371,8 +371,6 @@ public class ProductDaoImpl implements ProductDao {
             /*
               当查询的页数小于已经查出来的页数时不再每次分页查询时再查一遍总页数,即查询总页数只查询一次
               当查询到最大页数的时候再查询一边总页数,即数据有了增加时会更新一次总页数值
-
-
             if(pageNum >= Product.pageCount) {
               查询总页数*/
                 DBConnectors.close(null, pst, rs);
@@ -458,6 +456,36 @@ public class ProductDaoImpl implements ProductDao {
         }
 
 
+    }
+
+    public List<Product> getLatestProducts(Integer i) {
+        String sql = "select * from product ORDER by pdate DESC limit 0," + i;
+        List<Product> productList = new ArrayList<Product>();
+        Connection conn = DBConnectors.getConnetion();
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Product product = null;
+
+        try {
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            while (rs.next()) {
+                Category category = new Category();
+                category.setId(rs.getInt("categoryid"));
+                product = new Product(rs.getInt("id"), rs.getString("name"),
+                                      rs.getString("descr"), rs.getDouble("normalprice"),
+                                      rs.getDouble("memberprice"), rs.getTimestamp("pdate"),
+                                      category);
+                productList.add(product);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            DBConnectors.close(conn, pst, rs);
+        }
+
+        return productList;
     }
 
 }

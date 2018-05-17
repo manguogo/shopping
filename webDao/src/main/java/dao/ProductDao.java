@@ -37,4 +37,6 @@ public interface ProductDao {
     //利用递归搜索所有的子category
     public void getCategories(Connection conn, Category category, List<Category> categories);
 
+    //获取最新的products
+    public List<Product> getLatestProducts(Integer i);
 }

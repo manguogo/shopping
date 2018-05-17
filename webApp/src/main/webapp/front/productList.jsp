@@ -1,10 +1,24 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="productSearchTD.ProductSearch" %>
+<%@ page import="service.ProductService" %>
+<%@ page import="service.impl.ProductServiceImpl" %>
+<%@ page import="java.util.List" %>
+<%@ page import="entity.Product" %>
 <!DOCTYPE html >
 <html >
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>本亲生活网</title>
 <meta name="keywords" content="" />
 <meta name="description" content="" />
+  <%
+    Integer[] categoryIds = {5};
+    ProductSearch productSearch = new ProductSearch();
+    ProductService ps = ProductServiceImpl.getProductService();
+    List<Product> productList = null;
+    productSearch.setCategoryIds(categoryIds);
+    productList = ps.searchProducts(productSearch, 1, 10);
+
+  %>
 </head>
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/index.js"></script>
@@ -23,13 +37,13 @@
 <div class="top">
 
 <div class="top1">
-<div class="top1_main"><span class="dl">您好，欢迎光临本亲生活网！<a href="denglu.html"> [请登录]</a>  <a href="zhuce.html">[免费注册]</a></span><span class="yh_zx"><a href="hyzx.html">用户中心</a>  |  <a href="#">我的订单</a>  |  <a href="#">帮助中心</a>  |  <a href="#">联系方式</a></span></div>
+<div class="top1_main"><span class="dl">您好，欢迎光临本亲生活网！<a href="denglu.jsp"> [请登录]</a>  <a href="zhuce.html">[免费注册]</a></span><span class="yh_zx"><a href="hyzx.html">用户中心</a>  |  <a href="#">我的订单</a>  |  <a href="#">帮助中心</a>  |  <a href="#">联系方式</a></span></div>
 </div>
 
 
 <div class="top_logo">
 
-<div class="logo"><a href="index.html"><img src="images/logo.jpg" width="338" height="113"  alt="本亲生活的logo标志"/></a></div>
+<div class="logo"><a href="index.jsp"><img src="images/logo.jpg" width="338" height="113" alt="本亲生活的logo标志"/></a></div>
 <div class="top_you">
 
 <div class="ss_1"><input name="key" type="text" id="key" value="请输入您要搜索的产品" size="30"      
@@ -224,9 +238,9 @@
     </div>
     <div class="navCon-menu fl">
       <ul>
-        <li><a class="curMenu" href="index.html">商城首页</a></li>
-        <li><a href="tplist.html">特色产品</a></li>
-        <li><a href="tplist.html">VIP专区</a></li>
+        <li><a class="curMenu" href="index.jsp">商城首页</a></li>
+        <li><a href="productList.jsp">特色产品</a></li>
+        <li><a href="productList.jsp">VIP专区</a></li>
         <li><a href="#">服务支持</a></li>
         <li><a href="newslist.html">相关资讯</a></li>
         <li><a href="about.html">关于本亲</a></li>
@@ -262,178 +276,35 @@
 <!--banner结束-->
 
 
-
-
-
 <!--中部开始-->
-
 
 <div class="con_ny">
 
-<div class="con_dqwz">您的当前位置：<a href="index.html">首页</a> >> 特色产品</div>
+<div class="con_dqwz">您的当前位置：<a href="index.jsp">首页</a> >> 特色产品</div>
 
+  <%
+    for (Product p : productList) {
+
+
+  %>
 <div class="tplist1" style="margin-left:0px;">
-<div class="tplist1_1"><a href="cpxq.html"><img src="images/chanpin2.jpg" width="296" height="185" /></a></div>
+<div class="tplist1_1">
+  <a href="productDetails.jsp?id=<%=p.getId()%>">
+    <img src="images/redwine.jpg" width="296" height="185" />
+  </a>
+</div>
 <div class="tplist_yy"></div>
-<div class="tplist_mc"><a href="cpxq.html">疯狂抢购 绿色健康补脑坚果零食 野山核桃</a></div>
-<div class="tplist_mcjg"><span class="yuanjia">原价￥28.00</span>                  <span class="tejia">特卖价￥17.5</span></div>
+<div class="tplist_mc">
+  <a href="productDetails.jsp?id=<%=p.getId()%>"><%=p.getName()%></a>
+</div>
+<div class="tplist_mcjg">
+  <span class="yuanjia">原价￥<%=p.getNormalPrice()%></span>
+  <span class="tejia">特卖价￥<%=p.getMemberPrice()%></span></div>
 </div>
 
-
-
-<div class="tplist1">
-<div class="tplist1_1"><a href="#"><img src="images/chanpin2.jpg" width="296" height="185" /></a></div>
-<div class="tplist_yy"></div>
-<div class="tplist_mc"><a href="#">疯狂抢购 绿色健康补脑坚果零食 野山核桃</a></div>
-<div class="tplist_mcjg"><span class="yuanjia">原价￥28.00</span>                  <span class="tejia">特卖价￥17.5</span></div>
-</div>
-
-
-
-<div class="tplist1">
-<div class="tplist1_1"><a href="#"><img src="images/chanpin2.jpg" width="296" height="185" /></a></div>
-<div class="tplist_yy"></div>
-<div class="tplist_mc"><a href="#">疯狂抢购 绿色健康补脑坚果零食 野山核桃</a></div>
-<div class="tplist_mcjg"><span class="yuanjia">原价￥28.00</span>                  <span class="tejia">特卖价￥17.5</span></div>
-</div>
-
-
-
-
-<div class="tplist1" style="margin-left:0px;">
-<div class="tplist1_1"><a href="#"><img src="images/chanpin2.jpg" width="296" height="185" /></a></div>
-<div class="tplist_yy"></div>
-<div class="tplist_mc"><a href="#">疯狂抢购 绿色健康补脑坚果零食 野山核桃</a></div>
-<div class="tplist_mcjg"><span class="yuanjia">原价￥28.00</span>                  <span class="tejia">特卖价￥17.5</span></div>
-</div>
-
-
-
-<div class="tplist1">
-<div class="tplist1_1"><a href="#"><img src="images/chanpin2.jpg" width="296" height="185" /></a></div>
-<div class="tplist_yy"></div>
-<div class="tplist_mc"><a href="#">疯狂抢购 绿色健康补脑坚果零食 野山核桃</a></div>
-<div class="tplist_mcjg"><span class="yuanjia">原价￥28.00</span>                  <span class="tejia">特卖价￥17.5</span></div>
-</div>
-
-
-
-<div class="tplist1">
-<div class="tplist1_1"><a href="#"><img src="images/chanpin2.jpg" width="296" height="185" /></a></div>
-<div class="tplist_yy"></div>
-<div class="tplist_mc"><a href="#">疯狂抢购 绿色健康补脑坚果零食 野山核桃</a></div>
-<div class="tplist_mcjg"><span class="yuanjia">原价￥28.00</span>                  <span class="tejia">特卖价￥17.5</span></div>
-</div>
-
-
-
-<div class="tplist1" style="margin-left:0px;">
-<div class="tplist1_1"><a href="#"><img src="images/chanpin2.jpg" width="296" height="185" /></a></div>
-<div class="tplist_yy"></div>
-<div class="tplist_mc"><a href="#">疯狂抢购 绿色健康补脑坚果零食 野山核桃</a></div>
-<div class="tplist_mcjg"><span class="yuanjia">原价￥28.00</span>                  <span class="tejia">特卖价￥17.5</span></div>
-</div>
-
-
-
-<div class="tplist1">
-<div class="tplist1_1"><a href="#"><img src="images/chanpin2.jpg" width="296" height="185" /></a></div>
-<div class="tplist_yy"></div>
-<div class="tplist_mc"><a href="#">疯狂抢购 绿色健康补脑坚果零食 野山核桃</a></div>
-<div class="tplist_mcjg"><span class="yuanjia">原价￥28.00</span>                  <span class="tejia">特卖价￥17.5</span></div>
-</div>
-
-
-
-<div class="tplist1">
-<div class="tplist1_1"><a href="#"><img src="images/chanpin2.jpg" width="296" height="185" /></a></div>
-<div class="tplist_yy"></div>
-<div class="tplist_mc"><a href="#">疯狂抢购 绿色健康补脑坚果零食 野山核桃</a></div>
-<div class="tplist_mcjg"><span class="yuanjia">原价￥28.00</span>                  <span class="tejia">特卖价￥17.5</span></div>
-</div>
-
-
-
-
-<div class="tplist1" style="margin-left:0px;">
-<div class="tplist1_1"><a href="#"><img src="images/chanpin2.jpg" width="296" height="185" /></a></div>
-<div class="tplist_yy"></div>
-<div class="tplist_mc"><a href="#">疯狂抢购 绿色健康补脑坚果零食 野山核桃</a></div>
-<div class="tplist_mcjg"><span class="yuanjia">原价￥28.00</span>                  <span class="tejia">特卖价￥17.5</span></div>
-</div>
-
-
-
-<div class="tplist1">
-<div class="tplist1_1"><a href="#"><img src="images/chanpin2.jpg" width="296" height="185" /></a></div>
-<div class="tplist_yy"></div>
-<div class="tplist_mc"><a href="#">疯狂抢购 绿色健康补脑坚果零食 野山核桃</a></div>
-<div class="tplist_mcjg"><span class="yuanjia">原价￥28.00</span>                  <span class="tejia">特卖价￥17.5</span></div>
-</div>
-
-
-
-<div class="tplist1">
-<div class="tplist1_1"><a href="#"><img src="images/chanpin2.jpg" width="296" height="185" /></a></div>
-<div class="tplist_yy"></div>
-<div class="tplist_mc"><a href="#">疯狂抢购 绿色健康补脑坚果零食 野山核桃</a></div>
-<div class="tplist_mcjg"><span class="yuanjia">原价￥28.00</span>                  <span class="tejia">特卖价￥17.5</span></div>
-</div>
-
-
-<div class="tplist1" style="margin-left:0px;">
-<div class="tplist1_1"><a href="#"><img src="images/chanpin2.jpg" width="296" height="185" /></a></div>
-<div class="tplist_yy"></div>
-<div class="tplist_mc"><a href="#">疯狂抢购 绿色健康补脑坚果零食 野山核桃</a></div>
-<div class="tplist_mcjg"><span class="yuanjia">原价￥28.00</span>                  <span class="tejia">特卖价￥17.5</span></div>
-</div>
-
-
-
-<div class="tplist1">
-<div class="tplist1_1"><a href="#"><img src="images/chanpin2.jpg" width="296" height="185" /></a></div>
-<div class="tplist_yy"></div>
-<div class="tplist_mc"><a href="#">疯狂抢购 绿色健康补脑坚果零食 野山核桃</a></div>
-<div class="tplist_mcjg"><span class="yuanjia">原价￥28.00</span>                  <span class="tejia">特卖价￥17.5</span></div>
-</div>
-
-
-
-<div class="tplist1">
-<div class="tplist1_1"><a href="#"><img src="images/chanpin2.jpg" width="296" height="185" /></a></div>
-<div class="tplist_yy"></div>
-<div class="tplist_mc"><a href="#">疯狂抢购 绿色健康补脑坚果零食 野山核桃</a></div>
-<div class="tplist_mcjg"><span class="yuanjia">原价￥28.00</span>                  <span class="tejia">特卖价￥17.5</span></div>
-</div>
-
-
-
-<div class="tplist1" style="margin-left:0px;">
-<div class="tplist1_1"><a href="#"><img src="images/chanpin2.jpg" width="296" height="185" /></a></div>
-<div class="tplist_yy"></div>
-<div class="tplist_mc"><a href="#">疯狂抢购 绿色健康补脑坚果零食 野山核桃</a></div>
-<div class="tplist_mcjg"><span class="yuanjia">原价￥28.00</span>                  <span class="tejia">特卖价￥17.5</span></div>
-</div>
-
-
-
-<div class="tplist1">
-<div class="tplist1_1"><a href="#"><img src="images/chanpin2.jpg" width="296" height="185" /></a></div>
-<div class="tplist_yy"></div>
-<div class="tplist_mc"><a href="#">疯狂抢购 绿色健康补脑坚果零食 野山核桃</a></div>
-<div class="tplist_mcjg"><span class="yuanjia">原价￥28.00</span>                  <span class="tejia">特卖价￥17.5</span></div>
-</div>
-
-
-
-<div class="tplist1">
-<div class="tplist1_1"><a href="#"><img src="images/chanpin2.jpg" width="296" height="185" /></a></div>
-<div class="tplist_yy"></div>
-<div class="tplist_mc"><a href="#">疯狂抢购 绿色健康补脑坚果零食 野山核桃</a></div>
-<div class="tplist_mcjg"><span class="yuanjia">原价￥28.00</span>                  <span class="tejia">特卖价￥17.5</span></div>
-</div>
-
-
+  <%
+    }
+  %>
 
 
 
@@ -523,13 +394,13 @@
 
 
 <div class="links">
-<div class="links_main">友情连接：&nbsp;<a href="#">郑州卓普科技</a> &nbsp; | &nbsp; 本亲生活网  &nbsp;|  &nbsp;郑州卓普科技 &nbsp; | &nbsp; 本亲生活网 &nbsp; | &nbsp; 郑州卓普科技 &nbsp; | &nbsp; 本亲生活网 &nbsp; | &nbsp; 郑州卓普科技 &nbsp; |  &nbsp;本亲生活网 &nbsp; |  &nbsp;郑州卓普科技 &nbsp; | &nbsp; 本亲生活网&nbsp;  |&nbsp;  郑州卓普科技  </div>
+<div class="links_main">友情连接：&nbsp;<a href="#">科技</a> &nbsp; | &nbsp; 本亲生活网  &nbsp;|  &nbsp;科技 &nbsp; | &nbsp; 本亲生活网 &nbsp; | &nbsp;科技 &nbsp; | &nbsp; 本亲生活网 &nbsp; | &nbsp; 科技 &nbsp; |  &nbsp;本亲生活网 &nbsp; |  &nbsp;科技 &nbsp; | &nbsp; 本亲生活网&nbsp;  |&nbsp;  科技  </div>
 </div>
 
 
-<div class="banquan">Copyright © 2014-2019 All Right Reserved 版权所有：本亲生活网 备案号： 豫ICP 450051256-1号<br />
+<div class="banquan">Copyright © 2014-2019 All Right Reserved <br />
 
-公司地址：郑州市东风路汇宝花园13号楼2单元202室 联系人：高经理 联系电话：13692548036 更多模板：<a href="http://www.mycodes.net/" target="_blank">源码之家</a>
+<a href="http://www.mycodes.net/" target="_blank"></a>
 
 <div class="banquan2"><img src="images/xinr.jpg" width="589" height="51" /></div>
 

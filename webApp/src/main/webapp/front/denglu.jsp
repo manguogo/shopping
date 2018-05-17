@@ -1,7 +1,38 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="service.UserService" %>
+<%@ page import="service.impl.UserServiceImpl" %>
+<%@ page import="entity.User" %>
 <!DOCTYPE html >
 <html >
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <%
+    //登陆信息提交到本页进行校验
+    String name = request.getParameter("name");
+    String password = request.getParameter("password");
+    if (null != name && null != password) {
+      UserService us = new UserServiceImpl();
+      User user = new User();
+      user.setUserName(name);
+      user.setPassword(password);
+
+      User isExist = us.userIsExist(user);
+      if (    isExist.getUserName() != null && isExist.getPassword() != null &&
+              isExist.getUserName().equals(name) && isExist.getPassword().equals(password)) {
+          //如果用户存在则存储用户信息
+          session.setAttribute("userBenQin", isExist);
+          session.setAttribute("isLogined",true);
+          response.sendRedirect("index.jsp");
+          return;
+      }else {
+          name = null;
+          password = null;
+      }
+    }
+
+
+
+  %>
 <title>本亲生活网</title>
 <meta name="keywords" content="" />
 <meta name="description" content="" />
@@ -23,18 +54,29 @@
 <div class="top">
 
 <div class="top1">
-<div class="top1_main"><span class="dl">您好，欢迎光临本亲生活网！<a href="denglu.html"> [请登录]</a>  <a href="zhuce.html">[免费注册]</a></span><span class="yh_zx"><a href="hyzx.html">用户中心</a>  |  <a href="#">我的订单</a>  |  <a href="#">帮助中心</a>  |  <a href="#">联系方式</a></span></div>
+<div class="top1_main">
+  <span class="dl">
+    您好，欢迎光临本亲生活网！<a href="denglu.jsp"> [请登录]</a>
+    <a href="zhuce.html">[免费注册]</a>
+  </span>
+  <span class="yh_zx">
+    <a href="hyzx.html">用户中心</a>  |  <a href="#">我的订单</a>  |  <a href="#">帮助中心</a>  |  <a href="#">联系方式</a>
+  </span>
+</div>
 </div>
 
 
 <div class="top_logo">
 
-<div class="logo"><a href="index.html"><img src="images/logo.jpg" width="338" height="113"  alt="本亲生活的logo标志"/></a></div>
+<div class="logo"><a href="index.jsp"><img src="images/logo.jpg" width="338" height="113" alt="本亲生活的logo标志"/></a></div>
 <div class="top_you">
 
-<div class="ss_1"><input name="key" type="text" id="key" value="请输入您要搜索的产品" size="30"      
+<div class="ss_1">
+  <input name="key" type="text" id="key" value="请输入您要搜索的产品" size="30"
           onclick="if(value==defaultValue){value='';this.style.color='#898b8c'}"    
-          onBlur="if(!value){value=defaultValue;this.style.color='#999'}" style="color:#999; line-height:26px;"  class="ssk1"/><input name="" value="搜 索" type="button"  class="button1"/></div>
+          onBlur="if(!value){value=defaultValue;this.style.color='#999'}" style="color:#999; line-height:26px;"  class="ssk1"/>
+  <input name="" value="搜 索" type="button"  class="button1"/>
+</div>
 
 </div>
 
@@ -224,9 +266,9 @@
     </div>
     <div class="navCon-menu fl">
       <ul>
-        <li><a class="curMenu" href="index.html">商城首页</a></li>
-        <li><a href="tplist.html">特色产品</a></li>
-        <li><a href="tplist.html">VIP专区</a></li>
+        <li><a class="curMenu" href="index.jsp">商城首页</a></li>
+        <li><a href="productList.jsp">特色产品</a></li>
+        <li><a href="productList.jsp">VIP专区</a></li>
         <li><a href="#">服务支持</a></li>
         <li><a href="newslist.html">相关资讯</a></li>
         <li><a href="about.html">关于本亲</a></li>
@@ -236,7 +278,7 @@
 </div>
 
 <!--导航结束-->
-
+<%--重要修改--%>
 <div class="con_dlbj">
 
 <div class="con_dlbj_main">
@@ -244,33 +286,32 @@
 <div class="denglu_bj2">
 <div class="denglu_nr2">
 <div class="denglu_bt4">用户登录</div>
-<div class="dl_yhm">用户名：<input name="key" type="text" id="key" value="用户名/您的邮箱" size="30"    
+  <form action="denglu.jsp" method="post">
+<div class="dl_yhm">
+  用户名：<input name="name" type="text" id="name" value="用户名/您的邮箱" size="30"
           onclick="if(value==defaultValue){value='';this.style.color='#3d4245'}"    
-          onBlur="if(!value){value=defaultValue;this.style.color='#ccc'}" style="width:170px; height:24px; line-height:24px; padding-left:5px;color:#ccc; border:1px solid #e4e4e4;" /></div>
+          onBlur="if(!value){value=defaultValue;this.style.color='#ccc'}" style="width:170px; height:24px; line-height:24px; padding-left:5px;color:#ccc; border:1px solid #e4e4e4;" />
+</div>
+<div class="dl_yhm">&nbsp;&nbsp;&nbsp;
+  密码：<input name="password" type="password"  style="width:170px; height:24px; line-height:24px; padding-left:5px;color:#3d4245; border:1px solid #e4e4e4;"/>
+</div>
 
-
-<div class="dl_yhm">&nbsp;&nbsp;&nbsp;密码：<input name="" type="text"  style="width:170px; height:24px; line-height:24px; padding-left:5px;color:#3d4245; border:1px solid #e4e4e4;"/></div>
-
-<div class="dl_jzmm"><input name="" type="checkbox" value="" /> 记住密码，下次自动登录</div>
-<div class="dl_dl"><input name="" type="button" value="登 录" onmousedown="this.style.left='1px';this.style.top='1px';" onmouseup="this.style.left='0px';this.style.top='0px';"  style="width:135px; height:39px; border:none; background:url(images/dl_dl.jpg); color:#FFF; font-size:14px; font-family:'微软雅黑'; position:relative;"/><a href="#">忘记密码？</a></div>
-
+<div class="dl_jzmm">
+  <input name="" type="checkbox" value="" /> 记住密码，下次自动登录
+</div>
+<div class="dl_dl">
+  <input name="" type="submit" value="登 录" onmousedown="this.style.left='1px';this.style.top='1px';" onmouseup="this.style.left='0px';this.style.top='0px';"  style="width:135px; height:39px; border:none; background:url(images/dl_dl.jpg); color:#FFF; font-size:14px; font-family:'微软雅黑'; position:relative;"/>
+  <a href="#">忘记密码？</a>
+</div>
+  </form>
 <div class="denglu_sm">
 <span style="color:#529014; font-weight:600;">如果您还不是本亲生活的会员?</span><br />
 <span>30秒轻松注册，就可方便购物，赶紧点击下方注册</span>
 </div>
-
-
 <div class="denglu_hmzc"><a href="zhuce.html">立即注册</a></div>
-
-
 </div>
 </div>
-
-
 </div>
-
-
-
 </div>
 <!--底部开始-->
 

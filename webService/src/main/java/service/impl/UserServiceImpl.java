@@ -59,4 +59,10 @@ public class UserServiceImpl implements UserService {
     public void remove(Integer id) {
         ud.deleteUser(id);
     }
+
+    public User userIsExist(User user) {
+        return ud.userIsExist(user);
+    }
+
+
 }
